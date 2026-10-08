@@ -1,0 +1,83 @@
+---
+title: "GitHub Integration: OAuth Setup for Private Repos"
+sidebarTitle: "GitHub OAuth"
+description: "Connect your GitHub account via OAuth to grant Flowy access to private repositories, auto-register webhooks for Git Sync, and unlock full commit history."
+---
+
+Flowy can visualize any public GitHub repository without authentication, but private repositories and advanced features like automatic webhook registration, Git Sync, and Time Machine commit history all require a connected GitHub account. OAuth is Flowy's secure, token-based method for establishing that connection — your credentials never pass through Flowy's servers, and you can revoke access at any time directly from GitHub.
+
+## What GitHub integration enables
+
+Connecting your GitHub account via OAuth unlocks the following capabilities across Flowy:
+
+- **Access to private repositories** — Paste any private repository URL and Flowy will fetch the file tree and generate the mind map without requiring you to make the repository public.
+- **Automatic webhook registration for Git Sync** — Flowy registers a push webhook directly on your repository so the mind map regenerates whenever new commits land.
+- **Time Machine access to full commit history** — Select any past commit or pull request and visually compare how the architecture has evolved over time.
+- **Auto-Push Webhooks on merge** — Configure Flowy to regenerate maps automatically on every merge to `main` or `master`, keeping your team's view always current.
+
+## Connecting your GitHub account
+
+<Steps>
+  <Step title="Open Settings → Integrations">
+    Log in to Flowy and open the **Settings** panel from the top navigation bar. Select the **Integrations** tab in the left sidebar.
+  </Step>
+  <Step title="Click Connect GitHub">
+    Under the GitHub section, click the **Connect GitHub** button. Flowy will initiate the OAuth flow.
+  </Step>
+  <Step title="Review the GitHub authorization page">
+    You will be redirected to GitHub's OAuth authorization page. Confirm the account shown in the top-right corner is the one you want to connect, then review the requested permissions listed on the page.
+  </Step>
+  <Step title="Authorize Flowy">
+    Click **Authorize Flowy** to grant the requested scopes. If your account belongs to a GitHub organization, you may also need to click **Grant** next to the relevant organization to allow access to its repositories.
+  </Step>
+  <Step title="Return to Flowy">
+    GitHub will redirect you back to Flowy automatically. The Integrations page will now show your GitHub username and a green **Connected** status badge — your account is linked and ready to use.
+  </Step>
+</Steps>
+
+## OAuth scopes
+
+Flowy requests the minimum set of GitHub OAuth scopes necessary to deliver its features. The following scopes are requested during authorization:
+
+| Scope | Purpose |
+|---|---|
+| `repo` | Read access to public and private repositories, including file trees, commit history, and branch metadata. |
+| `admin:repo_hook` | Permission to register, list, and delete webhooks on repositories you own or administer. Required for Git Sync and Auto-Push Webhooks. |
+| `read:user` | Read your GitHub username and primary email address to identify your account within Flowy. |
+
+<Note>
+  Public repositories do not require OAuth authorization. You can paste any public GitHub URL directly into Flowy and generate a mind map without connecting an account. OAuth is only required for private repositories and webhook-based features.
+</Note>
+
+<Warning>
+  If you revoke Flowy's OAuth token from **GitHub Settings → Applications → Authorized OAuth Apps** without first disconnecting from Flowy's Settings panel, any maps with active webhooks will stop syncing. Always disconnect from Flowy first, or re-connect after revoking to restore access.
+</Warning>
+
+## Disconnecting GitHub
+
+You can disconnect your GitHub account from either side of the integration.
+
+**From Flowy:**
+1. Go to **Settings → Integrations**.
+2. Click **Disconnect** next to your GitHub account.
+3. Flowy will remove the stored token and disable all private repository access and webhook features.
+
+**From GitHub:**
+1. Go to **GitHub Settings → Applications → Authorized OAuth Apps**.
+2. Find **Flowy** in the list and click **Revoke**.
+3. This immediately invalidates the access token. Any active webhooks registered by Flowy will stop delivering events, and private repository maps will become inaccessible until you reconnect.
+
+<Tip>
+  If you are rotating credentials or transferring a repository to a new owner, disconnect and reconnect your GitHub account from Flowy Settings to issue a fresh OAuth token with the correct permissions.
+</Tip>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Webhooks" icon="webhook" href="/reference/webhooks">
+    Configure Auto-Push Webhooks to regenerate your mind maps automatically on every commit or merge.
+  </Card>
+  <Card title="Git Sync" icon="arrows-rotate" href="/features/git-sync">
+    Learn how Flowy's real-time Git Sync indicator keeps your maps up to date with your branch's latest commit.
+  </Card>
+</CardGroup>

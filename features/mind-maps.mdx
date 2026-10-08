@@ -1,0 +1,71 @@
+---
+title: "Instant Mind Maps from Any GitHub Repository"
+sidebarTitle: "Mind Maps"
+description: "Paste a GitHub URL and Flowy generates a complete interactive mind map of the codebase — folders, files, and dependencies visualized in seconds."
+---
+
+Flowy transforms any GitHub repository into a fully navigable mind map the moment you paste its URL. Instead of opening dozens of files to understand how a codebase is structured, you get a visual hierarchy that exposes folder organization, file relationships, and import chains at a glance. Whether you're onboarding to a new project, auditing a legacy service, or preparing for a refactor, mind maps give you the spatial context that reading raw code never can.
+
+## How mind maps are generated
+
+When you submit a GitHub URL, Flowy follows a four-step pipeline to produce your map:
+
+1. **URL ingestion** — Flowy parses the URL to extract the owner, repository name, and optional branch reference.
+2. **API fetch** — The GitHub API is queried to retrieve the full recursive file tree.
+3. **Parse & analyze** — The file tree is analyzed for folder hierarchy, file types, and import/dependency relationships. TypeScript projects are also checked for `tsconfig.json` to resolve path aliases before rendering.
+4. **Render** — The processed graph is rendered on the interactive canvas as a node-based mind map.
+
+For a deeper technical walkthrough of every step in this pipeline, see [How It Works](/how-it-works).
+
+## Feature breakdown
+
+<CardGroup cols={2}>
+  <Card title="Hierarchical Node Graph" icon="sitemap">
+    The mind map mirrors the exact directory structure of the repository. Root-level folders become primary branches; nested folders and files cascade outward as child nodes, preserving the full hierarchy you'd see in a file explorer.
+  </Card>
+  <Card title="Folder & File Hierarchy" icon="folder-tree">
+    Flowy automatically distinguishes directories from individual files and renders them with distinct visual treatments. Expanding a folder node reveals its children inline, so you can drill down without losing the surrounding context.
+  </Card>
+  <Card title="Import & Dependency Mapping" icon="arrow-right-arrow-left">
+    Edges drawn between nodes represent real import or dependency relationships found in the source code. Following an edge from a component to a utility file tells you exactly which modules depend on one another.
+  </Card>
+  <Card title="tsconfig Alias Resolution" icon="terminal">
+    TypeScript projects that use `@/` or other custom path aliases are analyzed correctly. Flowy reads `tsconfig.json` automatically so that aliased imports are resolved to their true targets rather than appearing as broken edges in the graph.
+  </Card>
+</CardGroup>
+
+## Reading your mind map
+
+Every node in your mind map represents a single file or directory in the repository:
+
+- **Directory nodes** are rendered as larger, labeled branch points. They can be expanded or collapsed to reveal or hide their children, keeping the canvas uncluttered when you're focused on a particular area.
+- **File nodes** are leaf-level nodes attached to their parent directory. Their label shows the filename and extension, giving you an immediate sense of the technology spread across the project.
+- **Relationship edges** connect nodes that share an import or dependency link. An edge from file A to file B means A imports something from B. Edge direction is meaningful — follow the arrows to trace data flow through the codebase.
+
+<Tip>
+  If you're new to Flowy, start by pasting the URL of a well-known open-source repository — something like a popular React starter or a small Node.js utility library. Familiar code lets you validate that the map matches what you already know, making it much easier to learn the interface before mapping your own projects.
+</Tip>
+
+## Supported repository types
+
+| Repository type | Requirements |
+|---|---|
+| Public repositories | No authentication needed — paste the URL and go |
+| Private repositories | GitHub OAuth connection required |
+| Monorepos | Fully supported; each package directory becomes a primary branch |
+| TypeScript projects with `@/` aliases | Automatically resolved via `tsconfig.json` parsing |
+
+<Info>
+  Private repository access requires connecting your GitHub account via OAuth. This grants Flowy read-only access to the repositories you authorize. See [GitHub Integration](/reference/github-integration) for the full setup guide.
+</Info>
+
+## Explore more
+
+<CardGroup cols={2}>
+  <Card title="Interactive Visualizer" icon="display" href="/features/visualizer">
+    Learn how to navigate your mind map with the Infinite Canvas, Focus Mode, Layer Filters, and Node Search.
+  </Card>
+  <Card title="Git Sync" icon="arrows-rotate" href="/features/git-sync">
+    Keep your mind map automatically updated every time a new commit lands on your branch.
+  </Card>
+</CardGroup>

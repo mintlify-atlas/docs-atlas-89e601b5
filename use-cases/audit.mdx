@@ -1,0 +1,72 @@
+---
+title: "Audit Codebases and Surface Technical Debt Visually"
+sidebarTitle: "Audit"
+description: "Use Flowy's AI anomaly detection and visual layer filters to find dead files, circular dependencies, and over-coupled modules before they become critical."
+---
+
+Technical debt is invisible in raw code. A file that nobody imports anymore looks exactly like a file that is critical infrastructure — you cannot tell the difference by reading it. Circular dependencies are buried inside import statements scattered across dozens of files. Over-coupled modules that violate the Single Responsibility Principle reveal themselves only after hours of manual dependency tracing. Flowy changes this by rendering the entire dependency graph visually and layering AI anomaly detection on top, so technical debt stops being invisible and starts being actionable.
+
+## What you can audit with Flowy
+
+<CardGroup cols={2}>
+  <Card title="Dead Files" icon="ghost">
+    Nodes with no incoming edges are unreferenced files — code that nothing imports. Flowy renders them as visually isolated nodes, making orphaned files immediately obvious without any grep or search.
+  </Card>
+  <Card title="Over-Coupled Modules" icon="arrow-trend-up">
+    Modules with an unusually high number of incoming dependencies are flagged by the AI. These are high-risk files — changing them can cascade failures across the entire codebase.
+  </Card>
+  <Card title="Circular Dependencies" icon="rotate">
+    Cycles in the dependency graph — where module A imports B, and B imports A — appear as loops in the mind map. The AI highlights these cycles as structural anomalies requiring immediate attention.
+  </Card>
+  <Card title="SRP Violations" icon="triangle-exclamation">
+    The AI identifies modules with high inverse cohesion — files that do too many unrelated things. It flags these with Refactor Suggestions, proposing how to extract and decouple responsibilities.
+  </Card>
+</CardGroup>
+
+## Running an audit
+
+<Steps>
+  <Step title="Open the repository map">
+    Paste the GitHub repository URL into Flowy. The mind map generates automatically, rendering every file and folder as a node with edges representing import relationships.
+  </Step>
+  <Step title="Enable AI Anomaly Detection">
+    In the AI Module panel, activate Anomaly Detection. The model analyzes the entire dependency graph and marks problematic nodes — isolated files, over-coupled modules, circular dependency participants — with visual highlights directly on the map.
+  </Step>
+  <Step title="Review flagged nodes">
+    Flagged nodes are highlighted in the map with distinct visual indicators. Scan the canvas to get a high-level picture of where technical debt is concentrated. Heavy clusters of flags indicate architectural problem areas.
+  </Step>
+  <Step title="Use Layer Filters to isolate by folder or file type">
+    Use Layer Filters to focus the audit on a specific part of the codebase — for example, show only `services/` files or only TypeScript files. This lets you run a targeted audit of a specific layer without the noise of unrelated modules.
+  </Step>
+  <Step title="Click flagged nodes for an AI explanation">
+    Clicking on a flagged node opens the AI explanation panel. Flowy describes exactly what the anomaly is: "This module has 14 incoming dependencies. Changes here affect 14 other files directly." No interpretation required — the AI explains the risk in plain language.
+  </Step>
+  <Step title="Use Refactor Suggestions to plan remediation">
+    For nodes flagged with SRP violations, the AI provides concrete Refactor Suggestions: which responsibilities should be extracted, what new module names to consider, and what the decoupled dependency graph would look like.
+  </Step>
+</Steps>
+
+## Interpreting AI flags
+
+Understanding what the AI is detecting helps you prioritize the right issues:
+
+**High inverse cohesion** means a module is handling multiple unrelated concerns. A file that manages database connections, formats API responses, and sends emails has low cohesion — it is doing three jobs that belong in three separate modules. The AI detects this pattern by analyzing the diversity of the module's outgoing dependencies relative to what imports it.
+
+**Too many incoming dependencies** signals that a module has become an unintentional shared utility. When 20 different files all import the same module, that module is a single point of failure. Any change to it — even a minor refactor — has a blast radius that spans the entire codebase. The AI flags these nodes because they represent disproportionate risk relative to their apparent size.
+
+**Circular dependencies** indicate a structural coupling problem that goes beyond code style. When two modules depend on each other, they become impossible to test in isolation, difficult to reason about, and prone to initialization order bugs. The AI flags every node participating in a cycle.
+
+<Info>
+  AI Anomaly Detection, Refactor Suggestions, and the Explain with AI feature require a Flowy account with the AI Module enabled. These features are part of the planned platform launching June 2026. Join the waitlist at [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) for early access.
+</Info>
+
+## Explore further
+
+<CardGroup cols={2}>
+  <Card title="Integrated AI" icon="microchip" href="/modules/ai">
+    Learn about all AI-powered features: node explanations, anomaly detection, and refactor suggestions — and how the model analyzes your dependency graph.
+  </Card>
+  <Card title="Refactoring" icon="screwdriver-wrench" href="/use-cases/refactoring">
+    Once you've identified technical debt through an audit, use Flowy's Focus Mode and Time Machine to safely plan and execute the remediation.
+  </Card>
+</CardGroup>

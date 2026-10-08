@@ -1,0 +1,73 @@
+---
+title: "Flowy: Visual Workspace for GitHub Repositories"
+sidebarTitle: "Introduction"
+description: "Flowy turns any GitHub repo into an interactive mind map with real-time Git sync — so developers can navigate and understand codebases instantly."
+---
+
+Flowy is a visual workspace that converts any GitHub repository into an interactive mind map in seconds. Instead of scrolling through hundreds of files or hunting for import chains, you paste a URL and Flowy analyzes the architecture, renders a navigable node graph on an infinite canvas, and keeps it synchronized with every new commit — so your team always works from an accurate, living picture of the codebase.
+
+## The Problem
+
+Large and unfamiliar codebases are expensive to understand. Whether you are a new engineer joining a team, a tech lead evaluating a third-party dependency, or an open-source contributor trying to make your first PR, the friction is the same:
+
+- **Weeks of onboarding.** New developers spend days — sometimes weeks — scrolling through folders, reading stale READMEs, and reverse-engineering how pieces fit together.
+- **Documentation that lies from day one.** Architecture diagrams and wiki pages become outdated the moment the next commit lands. Nobody updates them consistently.
+- **Fear of refactoring.** Hidden dependency chains make even small changes risky. Without a visual map of what imports what, the blast radius of a refactor is anyone's guess.
+- **Hours lost hunting imports.** Tracing which modules depend on a shared utility — or finding every file touched by a given function — requires grep sessions and mental bookkeeping.
+
+The result is that understanding code, rather than writing it, consumes the majority of a developer's time on any non-trivial project.
+
+## The Solution
+
+Flowy replaces file-tree archaeology with spatial navigation. The core workflow is three steps: paste a GitHub URL, explore the generated mind map, and let Git Sync keep it fresh automatically.
+
+- **URL → mind map in seconds.** Flowy calls the GitHub API, parses the file and folder structure, resolves path aliases from `tsconfig.json`, and renders the entire architecture as a node graph — no configuration required.
+- **Focus Mode for instant isolation.** Click any file node and Flowy hides everything except its direct connections, so you can trace a dependency chain without cognitive overload.
+- **Real-time Git Sync.** Flowy registers a webhook on your repository. Every push to the branch triggers an automatic map refresh, meaning the visual always matches the source.
+- **AI-powered insights.** Select any node and ask the integrated AI to explain its responsibility, flag coupling issues, or suggest refactoring opportunities aligned with the Single Responsibility Principle.
+- **Shareable URLs.** Generate a public link so teammates, reviewers, or external collaborators can explore the architecture without needing repository access.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Instant Mind Maps" icon="bolt">
+    Paste any public GitHub URL and receive a complete, hierarchical visual map of the codebase within seconds — no setup, no CLI, no configuration files.
+  </Card>
+  <Card title="Interactive Visual Workspace" icon="expand">
+    An infinite canvas lets you zoom, drag, and reorganize nodes freely. Layer filters let you hide nodes by file type, folder, or Git status so you only see what matters.
+  </Card>
+  <Card title="Real-Time Git Sync" icon="rotate">
+    Flowy registers a webhook on your repository and automatically regenerates the map on every push, keeping your visual architecture in sync with the branch's latest commit.
+  </Card>
+  <Card title="AI-Powered Insights" icon="microchip-ai">
+    The integrated AI explains node responsibilities, detects modules with high inverse cohesion, flags too many incoming dependencies, and proposes SRP-aligned refactors.
+  </Card>
+  <Card title="Shareable Maps" icon="link">
+    Every map gets a public URL anyone can open in a browser. Add sticky notes to nodes to annotate technical debt, decisions, or onboarding context for your team.
+  </Card>
+</CardGroup>
+
+## Who Is Flowy For?
+
+Flowy is built for anyone who needs to understand a codebase quickly and accurately:
+
+- **Engineers onboarding to a new team** — grasp data flow and module ownership in minutes rather than weeks.
+- **Tech leads and architects** — audit complexity, track growth over time with the Time Machine, and share architecture context without maintaining separate docs.
+- **Open-source contributors** — orient yourself in an unfamiliar repository before opening a PR, and verify that your changes don't introduce unexpected side effects.
+- **Teams doing code reviews** — see at a glance which modules a pull request touches and whether new dependencies violate existing boundaries.
+- **Anyone maintaining living documentation** — replace static diagrams with a map that updates itself on every merge.
+
+<Note>
+  Flowy is currently in pre-launch. The platform is scheduled to open for general access in **June 2026**. Join the waitlist at [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) to secure early access — over 600 engineers are already on the list.
+</Note>
+
+## Where to Go Next
+
+<CardGroup cols={2}>
+  <Card title="Get Started in Two Minutes" icon="rocket" href="/quickstart">
+    Join the waitlist, open Flowy, paste a repository URL, and generate your first interactive mind map.
+  </Card>
+  <Card title="How Flowy Works" icon="gears" href="/how-it-works">
+    Understand the full pipeline — from GitHub URL input through architecture analysis to automatic Git Sync.
+  </Card>
+</CardGroup>

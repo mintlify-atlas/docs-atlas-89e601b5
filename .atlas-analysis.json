@@ -1,0 +1,106 @@
+{
+  "projectType": "saas",
+  "projectName": "Flowy",
+  "projectDescription": "A visual workspace that converts any GitHub repository into an interactive mind map with real-time Git synchronization.",
+  "theme": "willow",
+  "primaryColor": "#00bc7d",
+  "lightColor": null,
+  "darkColor": null,
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Overview",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "how-it-works"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "features/mind-maps",
+              "features/visualizer",
+              "features/git-sync"
+            ]
+          },
+          {
+            "group": "Modules",
+            "pages": [
+              "modules/management",
+              "modules/ai",
+              "modules/integrations",
+              "modules/social"
+            ]
+          },
+          {
+            "group": "Use Cases",
+            "pages": [
+              "use-cases/onboarding",
+              "use-cases/audit",
+              "use-cases/refactoring",
+              "use-cases/code-reviews",
+              "use-cases/living-docs"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "Configuration",
+            "pages": [
+              "reference/github-integration",
+              "reference/webhooks",
+              "reference/tsconfig-alias-support"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "reference/faq",
+              "reference/roadmap",
+              "reference/changelog"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Instant mind maps from any GitHub URL",
+    "Interactive infinite canvas with zoom, drag, and node navigation",
+    "Real-time Git sync — map updates on every new commit",
+    "Management dashboard for all scanned projects",
+    "Focus Mode — isolates a file's direct dependency connections",
+    "Layer filters by file type, folder, or Git status",
+    "AI-powered code explanation, anomaly detection, and refactor suggestions",
+    "Private repository support via GitHub OAuth",
+    "Time Machine — compare architectural complexity across commits",
+    "Auto-push webhooks for automatic map regeneration on merge",
+    "Shareable public map URLs",
+    "In-app sticky notes for collaborative annotation",
+    "tsconfig.json alias resolution (@/ path support)"
+  ],
+  "publicApiSurface": [
+    "GitHub URL input → mind map generation",
+    "Git sync status indicator (traffic light)",
+    "Layer filter controls (file type, folder, Git status)",
+    "Focus Mode (single-click dependency isolation)",
+    "Node search",
+    "AI explain node",
+    "AI anomaly detection",
+    "AI refactor suggestions",
+    "GitHub OAuth (private repo access)",
+    "Webhook endpoint (auto-push on merge)",
+    "Time Machine (commit/PR comparison)",
+    "Shareable map URLs",
+    "Sticky notes per node",
+    "Tags & folder organization",
+    "Global search across all saved maps"
+  ]
+}

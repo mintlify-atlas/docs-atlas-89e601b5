@@ -1,0 +1,92 @@
+---
+title: "Pro Integrations: OAuth, Webhooks, and Time Machine"
+sidebarTitle: "Integrations"
+description: "Unlock private repositories via GitHub OAuth, resolve path aliases from tsconfig.json, replay history with Time Machine, and auto-sync on every merge."
+---
+
+The Pro Integrations module extends Flowy beyond public repositories and manual refreshes. With this module you can authenticate against GitHub to map private and enterprise codebases without leaving the browser, configure webhooks so that maps regenerate themselves on every merge, step back in time to compare architectural complexity between any two commits, and ensure that TypeScript path aliases are resolved correctly so the dependency graph is always accurate.
+
+<CardGroup cols={2}>
+  <Card title="Alias Support (@/)" icon="terminal">
+    Flowy reads your project's `tsconfig.json` automatically and resolves framework path aliases — such as `@/` — so that import edges in the graph point to the correct modules.
+  </Card>
+  <Card title="Time Machine" icon="clock-rotate-left">
+    Select any past commit or pull request and render a historical snapshot of the map. A side-by-side comparison view highlights nodes that were added, removed, or grew in complexity.
+  </Card>
+  <Card title="Private Repos via OAuth" icon="lock">
+    Authenticate with GitHub OAuth to grant Flowy read access to your private and organisation repositories. No tokens are stored in plaintext — access is scoped and revocable.
+  </Card>
+  <Card title="Auto-Push Webhooks" icon="webhook">
+    Register a Flowy webhook in your GitHub repository and the map regenerates itself automatically every time a merge lands on your target branch.
+  </Card>
+</CardGroup>
+
+## GitHub OAuth
+
+Connecting your GitHub account unlocks every private repository you have access to — personal repos, organisation repos, and enterprise installations — without requiring you to paste a personal access token or leave the browser.
+
+**What Flowy requests:**
+
+| OAuth scope | Why it is needed |
+|-------------|-----------------|
+| `repo` (read) | Read file trees and commit histories from private repositories |
+| `read:org` | List organisation repositories you are a member of |
+| `read:user` | Associate the connection with your Flowy account |
+
+Flowy never requests write scopes. The connection appears under **Settings → Integrations** and can be revoked at any time — revoking it immediately removes Flowy's ability to access any repository that was only reachable via the OAuth token.
+
+For a full walkthrough of the OAuth flow and troubleshooting steps, see the [GitHub Integration reference](/reference/github-integration).
+
+## Time Machine
+
+Time Machine lets you answer the question: *has this codebase become more or less tangled over time?* Rather than reading changelogs or grepping through git blame, you navigate to a specific point in history and let Flowy render what the architecture looked like then.
+
+<Steps>
+  <Step title="Open the Time Machine panel">
+    With any map open, click the **Time Machine** icon in the top toolbar (or use the keyboard shortcut `T`). The panel slides in from the right and lists the branch's commit history in reverse chronological order.
+  </Step>
+  <Step title="Select a historical reference point">
+    Choose a specific commit SHA, a pull request number, or a named tag from the list. You can also type a date to jump to the most recent commit before midnight on that day.
+  </Step>
+  <Step title="Flowy fetches the historical tree">
+    Flowy retrieves the file tree and import graph as they existed at the selected reference point. This uses the same analysis pipeline as a fresh scan — you get an accurate graph, not a cached approximation.
+  </Step>
+  <Step title="View the comparison">
+    The canvas splits into a before/after layout. Nodes that did not exist in the historical snapshot are tinted green. Nodes that were removed since then are tinted red. Nodes whose incoming dependency count increased significantly are tinted amber. A summary panel lists the ten most changed modules by complexity delta.
+  </Step>
+</Steps>
+
+<Note>
+  Time Machine is available for both public and OAuth-connected private repositories. For very large repositories, historical fetches may take a few seconds longer than a standard scan because Flowy must re-analyse the tree from the selected commit rather than using a cached result.
+</Note>
+
+## Alias Support
+
+Many modern JavaScript and TypeScript frameworks encourage the use of path aliases to avoid deeply nested relative imports. Next.js, Vite, and Nuxt projects commonly configure an `@/` alias that maps to the `src/` directory. Without alias resolution, Flowy would render these imports as broken edges pointing to nowhere.
+
+**How it works:**
+
+1. When Flowy scans a repository, it looks for a `tsconfig.json` (or `jsconfig.json`) at the project root.
+2. It extracts the `compilerOptions.paths` map and the `compilerOptions.baseUrl` setting.
+3. Every import statement in the codebase is then resolved against this alias map before the dependency graph is built.
+
+This means an import written as `import { Button } from "@/components/ui/Button"` correctly draws an edge to `src/components/ui/Button.tsx` on the canvas — the same way a TypeScript compiler would resolve it.
+
+For a complete reference on supported alias patterns and edge cases (monorepo setups, multiple `tsconfig.json` files, non-standard alias prefixes), see the [tsconfig Alias Support reference](/reference/tsconfig-alias-support).
+
+## Webhooks
+
+Auto-Push Webhooks close the loop between your Git workflow and your Flowy maps. Once configured, every merge to your target branch triggers Flowy to re-scan the repository and regenerate the map — no manual intervention needed.
+
+This is the mechanism that keeps the Git Sync indicator in the [Management dashboard](/modules/management) perpetually green for active projects. It also means that shareable map URLs (see [Social Features](/modules/social)) always reflect the current state of the codebase for anyone viewing them.
+
+For setup instructions, payload format details, and security best practices for verifying webhook signatures, see the [Webhooks reference](/reference/webhooks).
+
+<CardGroup cols={2}>
+  <Card title="GitHub Integration Reference" icon="github" href="/reference/github-integration">
+    Full OAuth setup guide, supported scopes, organisation access configuration, and troubleshooting steps.
+  </Card>
+  <Card title="Webhooks Reference" icon="webhook" href="/reference/webhooks">
+    Webhook payload schema, signature verification, retry behaviour, and example GitHub Actions integration.
+  </Card>
+</CardGroup>

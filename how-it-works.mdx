@@ -1,0 +1,85 @@
+---
+title: "How Flowy Analyzes and Visualizes Repositories"
+sidebarTitle: "How It Works"
+description: "A technical walkthrough of Flowy's pipeline — from pasting a GitHub URL to a live, auto-updating interactive mind map on the infinite canvas."
+---
+
+When you paste a GitHub URL into Flowy, a multi-stage pipeline runs in the background: the repository tree is fetched via the GitHub API, the file and folder structure is parsed and enriched with dependency relationships, and the result is rendered as an interactive node graph. A webhook registration at the end of the process ensures the map stays synchronized with every subsequent commit — no manual refresh required.
+
+## The Analysis Pipeline
+
+<Steps>
+  <Step title="URL Input">
+    The pipeline begins when you paste a GitHub repository URL into the Flowy search bar. Flowy validates the URL format and extracts the owner and repository name. Both public repositories (no authentication needed) and private repositories (GitHub OAuth required) are supported from this single entry point.
+  </Step>
+  <Step title="Repository Fetch">
+    Flowy calls the GitHub REST API using the extracted owner and repository name to retrieve the full recursive file tree and repository metadata — including branch name, default branch, last commit SHA, and file paths. For private repositories, the request is made using the OAuth access token obtained during the authorization flow.
+
+    The response gives Flowy a complete, flat list of every file and folder path in the repository at the current HEAD of the tracked branch.
+  </Step>
+  <Step title="Architecture Analysis">
+    With the file tree in hand, Flowy's analysis engine processes the structure in several passes:
+
+    - **Hierarchy parsing** — folder paths are parsed into a tree of parent and child nodes, preserving the directory structure as the backbone of the mind map.
+    - **File-type classification** — each file is tagged by extension (TypeScript, JavaScript, CSS, JSON, Markdown, and so on) so nodes can be color-coded and filtered in the visualizer.
+    - **Import and dependency mapping** — source files are scanned for import statements to build a directed graph of relationships between modules, revealing which files depend on which.
+    - **Alias resolution** — `tsconfig.json` path aliases (for example `@/` mapped to `./src/`) are read and resolved so that aliased imports are correctly traced to their real file targets rather than displayed as broken edges. See [Alias Resolution](#alias-resolution) below for details.
+  </Step>
+  <Step title="Mind Map Generation">
+    The analyzed structure — the hierarchy tree plus the dependency graph — is passed to the Flowy rendering engine, which places it on the **infinite canvas** as an interactive node graph:
+
+    - The repository root becomes the central node.
+    - Folder clusters expand outward as named groups.
+    - File nodes sit at the leaves of each cluster, styled by file type.
+    - Dependency edges are drawn between nodes that share import relationships.
+
+    The initial layout is calculated automatically to minimize edge crossings, but you can drag, zoom, and reorganize nodes freely at any time.
+  </Step>
+  <Step title="Git Sync Registration">
+    After the map is rendered, Flowy registers a **webhook** on the repository through the GitHub API. The webhook is scoped to `push` events on the tracked branch. This registration requires either a public repository (where Flowy uses its own GitHub App integration) or an authenticated private-repository connection via OAuth.
+
+    Once registered, the webhook endpoint URL is stored alongside the map in your Flowy dashboard. You can view and manage webhook registrations per repository from the [Management Module](/modules/management).
+  </Step>
+  <Step title="Auto-Update on Push">
+    Every time a new commit is pushed to the tracked branch, GitHub sends a `push` event payload to Flowy's webhook endpoint. Flowy's backend receives the event, re-fetches the repository tree using the new commit SHA, re-runs the architecture analysis pipeline, and refreshes the mind map on your canvas — all without any action on your part.
+
+    The dashboard's traffic-light indicator updates in real time: green when the map matches the latest commit, amber while a refresh is in progress, and red if the webhook has not yet delivered an update. Full details on webhook configuration are in the [Webhooks reference](/reference/webhooks).
+  </Step>
+</Steps>
+
+## Alias Resolution
+
+Many modern TypeScript and JavaScript projects use path aliases in `tsconfig.json` to avoid deep relative import chains. A common pattern looks like this:
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+Without alias resolution, an import like `import { Button } from "@/components/Button"` would appear as an unresolvable edge in the mind map. Flowy automatically reads the `tsconfig.json` at the root of the repository during the analysis phase and applies the declared path mappings before building the dependency graph — so aliased imports are traced to their real file targets just like standard relative imports.
+
+This also works with framework-specific conventions such as Next.js's built-in `@/` alias and custom multi-root configurations. For a full reference on supported alias patterns and edge cases, see [TypeScript Alias Support](/reference/tsconfig-alias-support).
+
+## Private Repositories
+
+Flowy accesses private repositories through a standard **GitHub OAuth flow**. When you paste a private repository URL, Flowy detects that the unauthenticated API call returns a 404 and prompts you to authorize via GitHub OAuth. The authorization requests the minimum required scopes (`repo` for reading private repository content and `admin:repo_hook` for registering webhooks).
+
+Once authorized, your access token is stored securely and reused for all subsequent fetches and webhook registrations on repositories belonging to the same GitHub account or organization. Tokens can be revoked at any time from your GitHub account's **Authorized OAuth Apps** page without affecting maps that have already been generated.
+
+For enterprise accounts, organization SSO, and fine-grained personal access token support, see the [GitHub Integration reference](/reference/github-integration).
+
+## Explore Further
+
+<CardGroup cols={2}>
+  <Card title="Mind Maps" icon="diagram-project" href="/features/mind-maps">
+    Learn how Flowy lays out nodes, how the dependency graph is structured, and how to interpret edges and clusters in the generated mind map.
+  </Card>
+  <Card title="Real-Time Git Sync" icon="rotate" href="/features/git-sync">
+    Deep dive into the webhook architecture, branch tracking configuration, and how to handle sync failures or stale maps.
+  </Card>
+</CardGroup>

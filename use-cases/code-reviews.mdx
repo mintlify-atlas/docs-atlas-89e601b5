@@ -1,0 +1,68 @@
+---
+title: "Detect Side Effects Before Merging with Visual Reviews"
+sidebarTitle: "Code Reviews"
+description: "Use Flowy's Time Machine and Focus Mode to catch architectural side effects in pull requests that line-by-line diffs will never show you."
+---
+
+Traditional code reviews are fundamentally limited by what they can see. A pull request diff shows you which lines changed — but it cannot show you that a modified module now has three new dependents, that a deleted file left behind an orphaned circular dependency, or that a seemingly minor refactor quietly coupled two previously independent modules. These are architectural side effects, and they are invisible to every line-diff tool. Flowy makes them visible by letting reviewers compare the dependency graph before and after the change, not just the code.
+
+## The visual code review workflow
+
+<Steps>
+  <Step title="Open the repository mind map">
+    Navigate to the Flowy map for the repository. The map reflects the latest commit on the branch being reviewed. If webhooks are configured, this happens automatically — the map is always current with the latest push to the branch.
+  </Step>
+  <Step title="Use Time Machine to select the base commit of the PR">
+    Open the Time Machine feature and select the merge base commit — the point where the PR branch diverged from `main`. Flowy renders the dependency graph as it existed at that exact commit, giving you the architectural baseline for comparison.
+  </Step>
+  <Step title="Compare the current map to the base state">
+    Return to the current state of the map. Nodes that were added in this PR appear as new connections in the graph. Nodes that were removed appear as missing edges. Added and removed relationships are visually apparent in a way that no line diff can communicate — you are looking at structural change, not line change.
+  </Step>
+  <Step title="Use Focus Mode on changed modules to see their full dependency footprint">
+    For each module that was modified in the PR, activate Focus Mode to see its full dependency footprint in the current state. Then switch back to the Time Machine view and activate Focus Mode on the same module. The difference between these two views is the full architectural impact of the PR on that module.
+  </Step>
+  <Step title="Add Sticky Notes on concerning nodes for discussion">
+    When you identify a dependency change that warrants discussion — a module that gained unexpected dependents, a new connection between previously unrelated layers — drop a Sticky Note directly on that node. Write the concern clearly: "This module now has a dependency on `payments/`. Was this intentional?"
+  </Step>
+  <Step title="Share the annotated map URL in the PR comments">
+    Copy the shareable Flowy map URL — it captures the current view, including any Sticky Notes — and paste it directly into the pull request comment or review. Other reviewers can open the link and see exactly what you are pointing at without any setup.
+  </Step>
+</Steps>
+
+## What visual reviews catch
+
+Line-diff code reviews are excellent at catching logic errors, style issues, and missing test coverage. Flowy visual reviews are designed to catch the class of problem that diffs cannot surface:
+
+- **New circular dependencies** — a PR that introduces a mutual import between two modules creates a cycle that is invisible in a diff but immediately visible as a loop in the mind map
+- **Modules that gained too many new dependents** — a file that was imported by two modules before the PR and is imported by eight modules after is a structural change with major maintenance implications
+- **Orphaned files left behind** — deleted or renamed files that other modules still reference show up as broken edges or isolated nodes in the post-PR map
+- **Unexpected cross-module coupling** — a change in a UI component that suddenly imports from `services/database/` violates layering conventions in a way that is immediately obvious in the visual graph but easy to miss in a diff
+- **Scope creep in a module's responsibilities** — a module that gains new outgoing dependencies after a PR may be accumulating responsibilities it should not own
+
+## Sharing the visual review
+
+Flowy's shareable map URLs are the key to making visual reviews part of your standard PR workflow. The URL captures the current state of the map, including any Sticky Notes and active Focus Mode selection.
+
+To include a visual review in a pull request:
+
+1. Open the Flowy map for the repository and navigate to the post-PR state
+2. Add Sticky Notes to any nodes with concerning dependency changes
+3. Copy the shareable URL from the Flowy toolbar
+4. Paste the URL into the PR description under a "Visual Review" section, or post it as a review comment alongside your textual feedback
+
+Reviewers who open the link land directly in the annotated map. They can explore the dependency graph themselves, zoom in on flagged nodes, and read the Sticky Notes — all without cloning the branch or setting up a local environment.
+
+<Tip>
+  Configure **Auto-Push Webhooks** for your repository so that the Flowy map regenerates automatically every time a new commit is pushed to the PR branch. This keeps the visual review current throughout the review cycle — if the author pushes a fix in response to a review comment, the map updates to reflect it without any manual action from the reviewer.
+</Tip>
+
+## Explore further
+
+<CardGroup cols={2}>
+  <Card title="Social Features" icon="users" href="/modules/social">
+    Learn how shareable map URLs, Sticky Notes, and collaborative annotations integrate into team workflows and async review processes.
+  </Card>
+  <Card title="Pro Integrations" icon="plug" href="/modules/integrations">
+    Explore Auto-Push Webhooks, Time Machine, and Private Repository OAuth — the integrations that keep Flowy synchronized with your Git workflow.
+  </Card>
+</CardGroup>

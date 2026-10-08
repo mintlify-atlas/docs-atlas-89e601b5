@@ -1,0 +1,69 @@
+---
+title: "Living Documentation That Syncs with Your Codebase"
+sidebarTitle: "Living Docs"
+description: "Replace static architecture diagrams with Flowy's auto-synced mind maps — documentation that reflects the actual codebase on every commit, with no manual upkeep."
+---
+
+Every architecture diagram starts accurate and becomes a lie. A developer draws a system diagram during a sprint planning session, it gets committed to the wiki, and within three weeks it no longer reflects how the modules actually connect. The diagram says `UserService` is independent; the codebase says it imports from `PaymentService` and `NotificationService`. Nobody updates the diagram because nobody has time, and gradually the written documentation and the living codebase diverge so completely that the documentation becomes worse than useless — it actively misleads. Flowy's mind maps are generated directly from the repository and synchronized on every commit, so this divergence is structurally impossible.
+
+## The stale documentation problem
+
+Written architecture docs fail for a predictable reason: they are maintained by humans who have other priorities. No matter how disciplined a team is about updating docs during refactors, the pressure of shipping means documentation maintenance is always deferred. The result is a growing gap between what the documentation says and what the code does. This gap manifests as:
+
+- New developers trust the architecture diagram, follow it into a module, and discover the actual structure is completely different
+- Documentation describes modules that were deleted months ago and omits modules that were added last sprint
+- Diagrams drawn in Miro or Confluence cannot be linked back to specific files, making them impossible to verify against the real code
+- Every update to the documentation requires a separate manual task — a task that competes with feature work and almost always loses
+
+The fundamental issue is that hand-maintained documentation is a separate artifact from the code, and separate artifacts drift apart.
+
+## Flowy as living documentation
+
+Flowy's mind maps are not a separate artifact — they are a direct rendering of the repository's dependency graph at a specific commit. This architectural property eliminates the maintenance problem entirely:
+
+**Always reflects the latest commit via Git Sync.** Flowy's Git Sync feature tracks the branch's last commit with a traffic light indicator. When Auto-Push Webhooks are configured, the map regenerates automatically on every merge to the main branch. The documentation is never more than one commit behind the code.
+
+**Shareable URLs mean anyone can access the current state.** There is no "last updated" timestamp to worry about. Anyone who opens the map URL sees the architecture as it exists right now, not as it existed when someone last remembered to update a diagram.
+
+**Sticky Notes add human context without creating separate documents.** A developer can annotate a node with "This module handles all payment provider abstraction — do not add business logic here" directly on the map. That annotation lives alongside the real dependency graph rather than in a separate document that might not be found when it matters most.
+
+**No manual maintenance required.** When a module is renamed, the map updates. When a file is deleted, the node disappears. When a new service is added, it appears as a new node. The documentation reflects reality because it is generated from reality.
+
+## Setting up living docs
+
+<Steps>
+  <Step title="Connect the repository via GitHub OAuth">
+    Sign into Flowy and connect your GitHub account using OAuth. This grants Flowy read access to your repositories — including private ones — without requiring manual token management. Select the repository you want to use as living documentation.
+  </Step>
+  <Step title="Enable Git Sync and Auto-Push Webhooks">
+    In the repository settings within Flowy, enable Git Sync to track the branch's commit status, then configure Auto-Push Webhooks. Flowy will provide a webhook URL to add to your repository's GitHub settings. After this is configured, every merge to `main` triggers an automatic map regeneration.
+  </Step>
+  <Step title="Add Sticky Notes to key modules explaining their purpose">
+    Navigate the map and add Sticky Notes to the modules that most commonly confuse new contributors or have non-obvious responsibilities. A single sentence — "Entry point for all background job scheduling" or "Do not import this directly from UI components" — can prevent hours of confusion and misuse.
+  </Step>
+  <Step title="Share the map URL in your README or team wiki">
+    Copy the shareable map URL and add it to the repository's README.md under an "Architecture" section. Add it to your team wiki, your onboarding document, and your sprint planning template. The URL always points to the current state of the map, so every reference to it is automatically up to date.
+  </Step>
+  <Step title="The map stays current automatically">
+    From this point forward, no maintenance action is required. Every time a developer merges a pull request, the map regenerates. The architecture documentation in the README points to the real, current architecture — always.
+  </Step>
+</Steps>
+
+<Tip>
+  Add the Flowy map URL directly to your repository's `README.md` under an **Architecture** section. Contributors who clone the repository for the first time will land on the map before they write a single line of code. Combined with Sticky Notes on key modules, this gives every contributor — including external open-source contributors who you will never onboard manually — an accurate architectural orientation the moment they start.
+</Tip>
+
+<Note>
+  Shareable Flowy map URLs are **publicly accessible** to anyone with the link. For proprietary or commercially sensitive codebases, consider whether the architectural structure of the repository is information you want to share openly. Private repository support via OAuth ensures that Flowy itself accesses your code securely, but the generated shareable map URL is not access-controlled. Review your team's security policy before sharing map URLs publicly.
+</Note>
+
+## Explore further
+
+<CardGroup cols={2}>
+  <Card title="Git Sync" icon="rotate" href="/features/git-sync">
+    Learn how Flowy's Git Sync feature tracks commit state, handles branch switching, and keeps the mind map aligned with the real codebase at all times.
+  </Card>
+  <Card title="Social Features" icon="users" href="/modules/social">
+    Explore Sticky Notes, shareable map URLs, and the collaboration features that turn Flowy maps into a living, annotated knowledge base for your team.
+  </Card>
+</CardGroup>

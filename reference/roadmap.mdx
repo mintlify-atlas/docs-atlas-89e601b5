@@ -1,0 +1,103 @@
+---
+title: "Flowy Product Roadmap: Features and Launch Phases"
+sidebarTitle: "Roadmap"
+description: "Explore Flowy's planned launch phases, v1.0 features shipping in June 2026, and the post-launch capabilities coming in v1.x and beyond."
+---
+
+Flowy is in active development ahead of its June 2026 public launch. This roadmap reflects the planned feature set based on the current product design — covering everything from the core mind map engine and Git Sync infrastructure to the AI Module and future platform integrations. The sequencing and scope of individual items may shift as development progresses.
+
+<Note>
+  This roadmap is subject to change. Features may be re-prioritized, merged, or rescheduled based on development progress and early-access feedback. Users on the waitlist at [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) will be notified of any significant updates to timing or scope.
+</Note>
+
+## Now: Pre-Launch
+
+Flowy is currently in the pre-launch phase. The waitlist is open and accepting signups, the core architecture is finalized, and all five product modules have completed feature design.
+
+- **Waitlist open** at [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) — over 600 engineers already signed up
+- **Core architecture finalized:** Next.js 16, React 19, Tailwind CSS v4, Framer Motion, TypeScript
+- **Feature design complete** for all five modules: Management, Pro Visualizer, Integrated AI, Pro Integrations, and Social Features
+- **Documentation site launched** covering all planned features, modules, and use cases
+
+---
+
+## v1.0 — Launch (June 2026)
+
+The initial public release of Flowy. Everything listed here ships on day one and forms the foundation of the platform.
+
+<CardGroup cols={2}>
+  <Card title="Public Repository Mind Maps" icon="diagram-project">
+    Paste any public GitHub URL and receive a complete, interactive mind map of the repository's architecture in seconds. No authentication required.
+  </Card>
+  <Card title="Interactive Infinite Canvas" icon="up-right-and-down-left-from-center">
+    Zoom, drag, and freely navigate nodes across a limitless canvas. Includes Focus Mode for isolating direct connections and Layer Filters for sorting by file type, folder, or Git status.
+  </Card>
+  <Card title="Real-Time Git Sync via Webhooks" icon="rotate">
+    Register a webhook and the mind map regenerates automatically on every push to the branch. A traffic-light indicator in the dashboard shows sync status at a glance.
+  </Card>
+  <Card title="Management Dashboard" icon="table-columns">
+    A visual panel of all your scanned projects with support for tags and folders. Organize maps into groups like Personal Projects, Open Source, or Work.
+  </Card>
+  <Card title="Focus Mode and Layer Filters" icon="filter">
+    Click any file node to hide everything except its direct connections. Layer Filters let you narrow the canvas by file type, directory, or current Git status.
+  </Card>
+  <Card title="Node Search" icon="magnifying-glass">
+    Locate any component, file, or function instantly using the in-canvas node search — no need to scroll through large maps manually.
+  </Card>
+  <Card title="Shareable Map URLs" icon="link">
+    Generate a public URL for any mind map. Anyone with the link can explore the full architecture without a Flowy account. Always shows the latest synced state.
+  </Card>
+  <Card title="GitHub OAuth for Private Repositories" icon="lock">
+    Authenticate with GitHub via OAuth to generate mind maps for private and enterprise repositories, entirely within the browser.
+  </Card>
+</CardGroup>
+
+---
+
+## v1.x — Post-Launch
+
+These features are designed and scoped for release in the updates following the June 2026 launch. Exact versioning and timing will be confirmed as v1.0 ships.
+
+<CardGroup cols={2}>
+  <Card title="AI Module" icon="microchip-ai">
+    Includes Explain with AI (structural analysis of any selected node), Anomaly Detection (flagging high-coupling modules), and Refactor Suggestions (proposals for decoupling SRP violations).
+  </Card>
+  <Card title="Time Machine" icon="clock-rotate-left">
+    Select any past commit or pull request to render the repository's mind map as it existed at that point. Enables side-by-side architectural comparison across time.
+  </Card>
+  <Card title="In-App Sticky Notes" icon="note-sticky">
+    Leave virtual notes on any node to annotate technical debt, explain decisions, or flag issues for teammates — all visible within the shared map.
+  </Card>
+  <Card title="Auto-Push Webhooks with Branch Filtering" icon="code-branch">
+    Extend webhook support with per-branch filtering rules — for example, regenerate the map only on merges to `main` while ignoring feature branches.
+  </Card>
+  <Card title="tsconfig Alias Support Improvements" icon="file-code">
+    Enhanced resolution for complex monorepo configurations, including `extends` chains across multiple `tsconfig` files and non-standard workspace setups.
+  </Card>
+  <Card title="Map Export (PNG, SVG, JSON)" icon="file-export">
+    Download your mind map as a PNG image, an SVG vector, or a structured JSON file for use in external documentation, presentations, or tooling.
+  </Card>
+</CardGroup>
+
+---
+
+## Future
+
+These items are on the long-term horizon. They are not committed to a specific release window but reflect the direction Flowy is heading.
+
+- **GitLab and Bitbucket support** — extend mind map generation beyond GitHub to the broader Git hosting ecosystem
+- **VS Code extension** — access Flowy mind maps directly from within the editor without switching to the browser
+- **Team workspaces and collaborative editing** — shared environments where multiple users can annotate, organize, and explore maps together in real time
+- **CI/CD pipeline visualization** — map your build and deployment pipelines alongside the codebase architecture
+- **Dependency graph diff in PR comments** — automatically post a visual diff of architectural changes as a comment when a pull request is opened
+
+---
+
+<CardGroup cols={2}>
+  <Card title="Changelog" icon="clock" href="/reference/changelog">
+    Review the full release history and track every update Flowy ships from launch onward.
+  </Card>
+  <Card title="Introduction" icon="house" href="/introduction">
+    Start from the beginning — learn what Flowy is, how it works, and why it was built.
+  </Card>
+</CardGroup>

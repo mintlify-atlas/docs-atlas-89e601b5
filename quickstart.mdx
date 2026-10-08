@@ -1,47 +1,74 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: "Get Started with Flowy in Under Two Minutes"
+sidebarTitle: "Quickstart"
+description: "Follow these steps to join the Flowy waitlist, paste your first GitHub URL, and explore an interactive mind map of any repository's architecture."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
+This guide walks you through everything from joining the waitlist to exploring your first interactive mind map. By the end you will have a live, navigable node graph of a real GitHub repository — and you will have connected Git Sync so the map updates automatically on every future commit.
 
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+<Tip>
+  Start with a well-known public repository such as `https://github.com/vercel/next.js` or `https://github.com/facebook/react`. Public repos require no authentication, so you can experience the full mind map in seconds without any setup.
+</Tip>
 
-## Prerequisites
-
-Before you begin, you must have:
-
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
-
-## Get started
+## Steps
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Join the Waitlist">
+    Flowy launches in June 2026. To secure your spot for early access:
 
-    ```bash
-    npm install your-package
-    ```
+    1. Open [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) in your browser.
+    2. Scroll to the waitlist form at the bottom of the page.
+    3. Enter your email address and click **Join now**.
+
+    You will receive a confirmation once your early-access invitation is ready. Over 600 engineers have already joined — early invites are granted on a rolling basis as capacity opens.
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
-
-    ```bash
-    your-cli init
-    ```
+  <Step title="Open Flowy">
+    Once you receive your early-access invitation, follow the link in your email to open the Flowy web app. No installation is required — Flowy runs entirely in the browser. Sign in with the email address you used to join the waitlist.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
+  <Step title="Paste a GitHub Repository URL">
+    On the Flowy home screen you will see a search bar with the prompt **"Paste a GitHub repository URL"**. Copy the full URL of any public GitHub repository — for example:
 
-    ```bash
-    your-cli start
     ```
+    https://github.com/vercel/next.js
+    ```
+
+    Paste it into the search bar and press **Enter** or click **Visualize**. Flowy immediately calls the GitHub API to fetch the repository's file tree and begins analysis.
+  </Step>
+  <Step title="Explore the Mind Map">
+    Your interactive mind map loads within seconds. Here is what you will see on the infinite canvas:
+
+    - **Root node** — the repository name sits at the center of the graph.
+    - **Folder nodes** — each top-level directory branches outward as a named cluster, with nested sub-folders expanding as child nodes.
+    - **File nodes** — individual files appear as leaf nodes, color-coded by type (TypeScript, CSS, JSON, and so on).
+    - **Relationship edges** — import and dependency connections are drawn as lines between nodes, so you can trace exactly which modules depend on which.
+
+    Use your mouse wheel or trackpad to zoom, click and drag the canvas to pan, and click any individual node to select it. Activate **Focus Mode** by clicking a node — the map immediately hides everything except that file's direct connections, letting you trace dependencies without distraction.
+  </Step>
+  <Step title="Enable Git Sync">
+    To keep your map up to date automatically:
+
+    1. Click the **Git Sync** button in the top-right toolbar.
+    2. Flowy will prompt you to authorize the GitHub integration via OAuth if you have not done so already.
+    3. Once connected, Flowy registers a webhook on the repository. From this point on, every push to the tracked branch triggers an automatic map refresh.
+
+    The dashboard shows a traffic-light indicator for each of your saved maps — green means in sync with the latest commit, amber means a refresh is in progress, and red means the map is behind the branch.
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+<Note>
+  Private repositories require GitHub OAuth authorization before Flowy can fetch the file tree. See [GitHub Integration](/reference/github-integration) for a full walkthrough of the OAuth flow, required permission scopes, and enterprise account support.
+</Note>
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
-</Tip>
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="The Pro Visualizer" icon="compass" href="/features/visualizer">
+    Dive deeper into the infinite canvas — learn about Layer Filters, Focus Mode, Node Search, and how to organize large maps effectively.
+  </Card>
+  <Card title="Real-Time Git Sync" icon="rotate" href="/features/git-sync">
+    Learn how Flowy's webhook integration keeps your mind maps synchronized with every commit and how to manage sync settings per repository.
+  </Card>
+  <Card title="Management Module" icon="table-columns" href="/modules/management">
+    Organize all your saved maps with the integrated dashboard, global search, tags, and folders across personal projects, open-source repos, and work.
+  </Card>
+</CardGroup>

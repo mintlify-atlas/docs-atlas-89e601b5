@@ -1,0 +1,68 @@
+---
+title: "Onboard New Developers Faster with Visual Maps"
+sidebarTitle: "Onboarding"
+description: "Cut onboarding time from weeks to hours by giving new developers a visual map of your codebase's data flow, architecture, and module relationships."
+---
+
+Bringing a new developer onto a complex codebase is one of the most expensive and underestimated costs in software teams. Before a new hire writes their first meaningful line of code, they typically spend days — sometimes weeks — just trying to understand where things live: which module handles authentication, how a request flows from the API layer to the database, and why two seemingly unrelated folders share a dependency. Flowy eliminates that invisible ramp-up period by replacing walls of text with a navigable, interactive mind map generated directly from the repository.
+
+## The traditional onboarding bottleneck
+
+The classic onboarding experience is a scavenger hunt. A new developer is handed a README that describes the system as it existed two years ago, told to "just explore the code," and expected to ask the right questions to the right people. In practice, this means:
+
+- Reading stale README files and architecture diagrams that no longer reflect reality
+- Grepping through files to find where a function is called or a type is defined
+- Manually tracing import chains across dozens of nested folders
+- Interrupting senior engineers with repeated "where does X live?" questions
+- Building a mental model one file at a time with no visual frame of reference
+
+The result is a slow, frustrating process that delays productivity and burns senior engineer time on repetitive explanations.
+
+## Onboarding with Flowy
+
+<Steps>
+  <Step title="Share the repository mind map URL">
+    The tech lead generates the Flowy map for the repository and copies the shareable URL. This takes seconds — no special setup, no export, just a link.
+  </Step>
+  <Step title="New team member opens the map">
+    The developer opens the link in their browser. There is nothing to install, no repository to clone, and no local environment to configure. The full architecture is immediately visible.
+  </Step>
+  <Step title="Explore the top-level folder structure as nodes">
+    The mind map renders every folder and file as a node in the graph. The new developer gets an instant bird's-eye view of how the project is organized — `app/`, `lib/`, `services/`, `components/` — all visible at once without opening a single file.
+  </Step>
+  <Step title="Click into specific modules to see dependencies">
+    Clicking on a module node expands its connections, showing which files it imports and which files import it. The new developer can immediately see whether a module is isolated or deeply coupled.
+  </Step>
+  <Step title="Use Focus Mode to trace a specific data flow">
+    To understand a single data flow — say, how a user authentication request is handled — the developer activates Focus Mode on the `auth` module. The map hides every unrelated node, leaving only the direct dependency chain visible. A process that used to take hours of file-jumping now takes minutes.
+  </Step>
+  <Step title="Add questions as Sticky Notes for async review">
+    When something is unclear, the new developer drops a Sticky Note directly onto the relevant node: "Why does this service import from the payments module?" The tech lead can respond asynchronously without a synchronous meeting.
+  </Step>
+</Steps>
+
+## What new developers can do immediately
+
+Once a new developer has the Flowy map open, the following tasks become trivial that would otherwise require hours of exploration:
+
+- **Trace an API call end-to-end** — follow the node connections from the route handler through middleware to the service layer and database model
+- **Find where authentication is handled** — search for `auth` by node name and see every file that touches it
+- **Understand the test structure** — identify which test files correspond to which source modules by following the import graph
+- **Spot the largest modules** — visually identify which nodes have the most connections, signaling complexity hotspots before touching any code
+- **Understand folder ownership** — see at a glance which directories are self-contained and which reach across the entire codebase
+- **Identify shared utilities** — find helper modules that are imported by many other files, understanding what "core" infrastructure exists
+
+<Tip>
+  Tech leads should create an annotated version of the map as the team's **living onboarding guide**. Add Sticky Notes to key modules explaining their purpose, ownership, and any non-obvious design decisions. Pin this map URL in your team wiki or README so every new hire starts from the same annotated foundation.
+</Tip>
+
+## Explore further
+
+<CardGroup cols={2}>
+  <Card title="Social Features" icon="users" href="/modules/social">
+    Learn how Sticky Notes, shareable URLs, and collaborative annotations make Flowy a team tool, not just a solo explorer.
+  </Card>
+  <Card title="Pro Visualizer" icon="eye" href="/features/visualizer">
+    Dive into Focus Mode, Layer Filters, and Node Search — the core tools that make navigating large codebases fast and precise.
+  </Card>
+</CardGroup>

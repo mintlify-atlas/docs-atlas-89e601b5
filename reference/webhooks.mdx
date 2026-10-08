@@ -1,0 +1,107 @@
+---
+title: "Webhooks: Automate Mind Map Regeneration on Push"
+sidebarTitle: "Webhooks"
+description: "Configure Flowy's Auto-Push Webhooks to automatically regenerate your mind map on every commit or merge, keeping your architecture view always current."
+---
+
+Flowy webhooks create a live connection between your GitHub repository and your mind map. Every time a commit is pushed — whether directly to a branch or via a pull request merge — GitHub notifies Flowy in real time. Flowy then re-fetches the repository's file tree, rebuilds the dependency graph, and re-renders the mind map, all without any manual action on your part. The Git Sync indicator updates immediately to reflect the latest commit SHA.
+
+## How Flowy webhooks work
+
+Understanding the flow behind webhooks helps you configure them correctly and troubleshoot if something doesn't update as expected.
+
+1. **Flowy registers a webhook on your GitHub repository** via the GitHub API using the `admin:repo_hook` OAuth scope. The webhook targets Flowy's secure ingest endpoint.
+2. **GitHub sends a `push` event payload** to Flowy's endpoint on every qualifying commit. The payload includes the branch ref, a list of commits, and metadata about added, modified, and removed files.
+3. **Flowy re-fetches the file tree** for the affected branch and re-runs the architecture analysis to produce an updated dependency graph.
+4. **The mind map re-renders** with any new, removed, or restructured nodes. The **Git Sync** indicator in the map header transitions from amber (out of date) to green (synced), reflecting the latest commit.
+
+## Setting up webhooks
+
+<Steps>
+  <Step title="Connect GitHub via OAuth">
+    Webhook registration requires the `admin:repo_hook` OAuth scope. If you haven't already connected your GitHub account, complete that step first. See [GitHub Integration](/reference/github-integration) for the full walkthrough.
+  </Step>
+  <Step title="Open the map for your repository">
+    From the Flowy dashboard, open an existing map or create a new one by pasting your repository URL. The repository must be one you own or administer on GitHub.
+  </Step>
+  <Step title="Navigate to Map Settings → Git Sync">
+    Click the **Settings** icon in the map toolbar (top-right corner of the canvas) and select the **Git Sync** tab from the panel that opens.
+  </Step>
+  <Step title="Enable Auto-Push Webhooks">
+    Toggle **Auto-Push Webhooks** to the on position. You can optionally configure a branch filter at this step (see the Filtering triggers section below).
+  </Step>
+  <Step title="Flowy registers the webhook automatically">
+    Flowy calls the GitHub API immediately and registers the webhook on your repository. You can verify this by visiting your repository on GitHub under **Settings → Webhooks** — a Flowy entry will appear with a green checkmark once delivery is confirmed.
+  </Step>
+  <Step title="Push a commit to verify">
+    Make a test commit or push an existing branch. The mind map should update within a few seconds. The Git Sync indicator will briefly show a loading state before settling on the latest commit hash.
+  </Step>
+</Steps>
+
+## Webhook event payload
+
+Flowy listens for GitHub's `push` webhook event. The payload GitHub delivers includes the branch reference, repository metadata, and an array of commits detailing every file change in the push. Flowy uses the `added`, `removed`, and `modified` arrays from each commit to determine which nodes in the mind map need to be created, deleted, or updated — minimizing unnecessary re-renders for large repositories.
+
+Below is an example of the push event payload structure Flowy processes:
+
+```json
+{
+  "ref": "refs/heads/main",
+  "repository": {
+    "full_name": "owner/repo",
+    "default_branch": "main"
+  },
+  "commits": [
+    {
+      "id": "abc123",
+      "message": "feat: add new module",
+      "added": ["src/modules/new.ts"],
+      "removed": [],
+      "modified": ["src/index.ts"]
+    }
+  ]
+}
+```
+
+<Note>
+  Webhook setup requires the `admin:repo_hook` GitHub OAuth scope. If Flowy's GitHub connection was granted without this scope — for example, if you authorized an older version of the integration — disconnect and reconnect your GitHub account from **Settings → Integrations** to request the updated scope set.
+</Note>
+
+## Filtering triggers
+
+By default, Flowy webhooks fire on any push to **any branch** in the repository. This is ideal for teams that maintain separate maps per branch or want comprehensive visibility across all feature branches.
+
+For production-grade workflows, you can restrict webhook triggers to specific branches:
+
+**Configuring branch filters:**
+1. Open **Map Settings → Git Sync** for the map you want to configure.
+2. Under **Trigger Branch**, change the setting from **All branches** to **Specific branch**.
+3. Enter the branch name (e.g., `main` or `master`) you want to use as the sole trigger.
+4. Click **Save**. Flowy updates the webhook configuration on GitHub to filter at the delivery level.
+
+<Tip>
+  For teams following a trunk-based development model, setting the trigger branch to `main` ensures the map only regenerates on completed, reviewed work — not every developer's in-progress feature branch push.
+</Tip>
+
+<Accordion title="What happens to the webhook if I delete the map?">
+  When you delete a map from the Flowy dashboard, Flowy automatically deregisters the corresponding webhook from your GitHub repository via the API. No manual cleanup is required on the GitHub side. If the deletion fails partway through (e.g., due to a network interruption), you can manually remove orphaned webhooks from **GitHub repository Settings → Webhooks**.
+</Accordion>
+
+<Accordion title="Why isn't my map updating after a push?">
+  Check the following in order:
+  - Confirm the webhook is listed under your GitHub repository's **Settings → Webhooks** with a green delivery status.
+  - Verify that **Auto-Push Webhooks** is still enabled in **Map Settings → Git Sync** — toggling it off stops all deliveries.
+  - If you set a branch filter, ensure your push targets the configured branch.
+  - Reconnect your GitHub OAuth token from **Settings → Integrations** if the `admin:repo_hook` scope has been revoked.
+</Accordion>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="GitHub OAuth" icon="github" href="/reference/github-integration">
+    Set up the GitHub OAuth connection that webhooks depend on for repository access and hook registration.
+  </Card>
+  <Card title="Git Sync" icon="arrows-rotate" href="/features/git-sync">
+    Understand how the Git Sync indicator works and how Flowy tracks the freshness of your maps against the latest commit.
+  </Card>
+</CardGroup>

@@ -1,0 +1,66 @@
+---
+title: "Flowy: Frequently Asked Questions for Developers"
+sidebarTitle: "FAQ"
+description: "Answers to common questions from developers about repository support, privacy, pricing, Git Sync, and feature availability in Flowy."
+---
+
+This FAQ addresses the most common questions developers ask when first exploring Flowy — from how repository access works and what data leaves your machine, to how features like Time Machine and Git Sync behave in practice. If you have a question not covered here, join the waitlist at [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) and reach out.
+
+<Accordion title="What types of repositories does Flowy support?">
+  Public GitHub repositories work immediately — paste any public GitHub URL and Flowy generates the mind map without any authentication. Private repositories are supported via GitHub OAuth, which lets Flowy securely access your private repos without leaving the browser. In terms of language support, JavaScript, TypeScript, and any language with a file-based directory structure are fully supported. Flowy maps the file tree and import relationships, so any project with a recognizable folder hierarchy will render correctly.
+</Accordion>
+
+<Accordion title="Is my code sent to Flowy's servers?">
+  No. Flowy does **not** clone or download your source code. It communicates exclusively with the GitHub API to fetch the repository's file tree and structural metadata — things like file paths, folder hierarchy, and import references. The actual content of your source files is never transmitted to Flowy's servers. This design is intentional to keep the platform lightweight and trustworthy, especially for teams working with proprietary codebases.
+</Accordion>
+
+<Accordion title="Do I need to install anything?">
+  No installation is required. Flowy is an entirely browser-based tool — there is no CLI to configure, no IDE extension to install, and no configuration files to add to your repository. Open your browser, paste a GitHub URL, and your mind map is ready. This also means Flowy works across operating systems and machines without any setup overhead.
+</Accordion>
+
+<Accordion title="How often does the mind map update?">
+  With Git Sync enabled, Flowy registers a webhook with your repository so that the mind map regenerates automatically on every new push. The Management Dashboard displays a traffic-light indicator showing whether your map is current with the branch's latest commit. If webhooks are not configured, you can manually trigger a refresh from the dashboard at any time. See [Git Sync](/features/git-sync) for full configuration details.
+</Accordion>
+
+<Accordion title="Can I use Flowy with monorepos?">
+  Yes. Flowy handles monorepos and will display all packages or workspaces as top-level nodes in the mind map, giving you a clear picture of the full structure. Alias resolution — such as `tsconfig.json` path mappings — is supported on a best-effort basis. Complex workspace configurations involving `extends` chains across multiple `tsconfig` files may not resolve fully at launch; improvements to monorepo alias handling are on the [post-launch roadmap](/reference/roadmap). See [tsconfig Alias Support](/reference/tsconfig-alias-support) for current details.
+</Accordion>
+
+<Accordion title="How does the AI Explain feature work?">
+  When you select a node and trigger "Explain with AI," Flowy sends the node's **file path**, its **imports**, and its **exports** to the AI model. No file contents are included in this request — the analysis is based entirely on structural metadata. The model uses this information to infer the module's responsibility, its role in the dependency graph, and any architectural concerns worth surfacing. This keeps the feature fast and privacy-safe. The AI Module, including Explain, is slated for the post-launch v1.x release — see the [Roadmap](/reference/roadmap).
+</Accordion>
+
+<Accordion title="What is the Time Machine feature?">
+  Time Machine lets you select any past commit or pull request from your repository's history and render the mind map exactly as it existed at that point in time. This makes it straightforward to compare architectural complexity between two points — for example, before and after a major refactor — and to understand how the dependency graph has evolved. It is particularly useful during audits and code reviews. Time Machine is part of the Pro Integrations module and is targeted for the post-launch v1.x release.
+</Accordion>
+
+<Accordion title="Are shareable map URLs permanent?">
+  Shareable URLs remain active for as long as your Flowy account is active. The link always resolves to the **latest synced state** of the map, so anyone you share it with will see the current architecture rather than a static snapshot. This makes shareable URLs ideal for onboarding new team members or embedding architecture references in documentation. See [Social Features](/modules/social) for more on public map sharing.
+</Accordion>
+
+<Accordion title="When is Flowy launching?">
+  The public platform launch is targeted for **June 2026**. Join the waitlist at [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) to secure early access. Waitlist members will be the first to be notified when the platform opens and will receive special early-access pricing. The full planned feature timeline is documented on the [Roadmap](/reference/roadmap).
+</Accordion>
+
+<Accordion title="Is Flowy free?">
+  Pricing details will be announced closer to the June 2026 launch. Early waitlist members will receive special early-access pricing as a thank-you for their support during the pre-launch phase. Sign up at [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) to be notified when pricing is revealed.
+</Accordion>
+
+<Accordion title="Does Flowy work with GitLab or Bitbucket?">
+  Currently, Flowy supports **GitHub only**. The platform is built around the GitHub API for repository access, webhook delivery, and OAuth authentication. Support for GitLab and Bitbucket is planned and appears on the [Roadmap](/reference/roadmap) as a future milestone. If GitLab or Bitbucket support is important to your workflow, joining the waitlist and indicating your preference will help prioritize it.
+</Accordion>
+
+<Accordion title="Can I export the mind map?">
+  Export functionality — including PNG, SVG, and JSON formats — is planned for a post-launch release and is listed on the [Roadmap](/reference/roadmap). At v1.0 launch, mind maps are shareable via public URLs. Full export support will be added in a subsequent v1.x update.
+</Accordion>
+
+---
+
+<CardGroup cols={2}>
+  <Card title="Product Roadmap" icon="map" href="/reference/roadmap">
+    See what's planned for v1.0 at launch, post-launch v1.x features, and the long-term future of Flowy.
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Get your first repository mind map running in under two minutes once Flowy launches.
+  </Card>
+</CardGroup>

@@ -1,0 +1,82 @@
+---
+title: "Management Module: Your Repository Dashboard"
+sidebarTitle: "Management"
+description: "Organize all your scanned repositories from one control center — with global search, live Git sync status, and flexible tags and folders."
+---
+
+The Management Module is the command center of your Flowy workspace. Every repository you have ever scanned lives here, presented as a structured panel of interactive maps. Rather than hunting through browser tabs or scattered bookmarks, you get a single hub where you can locate any project at a glance, check whether your map reflects the latest commit on your branch, and organize everything into a structure that mirrors how you actually think about your work.
+
+<CardGroup cols={2}>
+  <Card title="Integrated Dashboard" icon="table-columns">
+    A visual panel listing every scanned project you own. Thumbnail previews and last-sync timestamps let you locate the right map without opening it first.
+  </Card>
+  <Card title="Global Search" icon="magnifying-glass">
+    Search for a specific file, component, or function name across every saved map simultaneously — not just the one currently open.
+  </Card>
+  <Card title="Git Sync" icon="code-branch">
+    A traffic-light indicator on each map card shows whether your visualization is current with the branch's latest commit — green for in sync, yellow for behind, red for conflict.
+  </Card>
+  <Card title="Tags & Folders" icon="folder-open">
+    Group maps freely into named folders such as Personal Projects, Open Source, or Work. Apply multiple tags to the same map to fit it into more than one context.
+  </Card>
+</CardGroup>
+
+## Organizing your maps
+
+Folders and tags work together to give you a two-dimensional filing system. Folders represent the hard boundaries — a map belongs to one folder at a time — while tags are additive labels you can stack without limit.
+
+<Steps>
+  <Step title="Create a folder">
+    From the dashboard, select **New Folder** and give it a descriptive name such as `Work` or `Open Source Contributions`. Folders appear as collapsible sections in your left sidebar.
+  </Step>
+  <Step title="Move a map into the folder">
+    Right-click any map card (or open its context menu via the `···` button) and choose **Move to Folder**. Select the target folder from the dropdown. The card disappears from the root view and reappears under the folder section.
+  </Step>
+  <Step title="Apply tags">
+    Open the map card's context menu and select **Edit Tags**. Type a tag name and press Enter. Tags are colour-coded automatically and appear as small chips on the card thumbnail. You can add as many tags as you need.
+  </Step>
+  <Step title="Filter by tag or folder">
+    Use the filter bar at the top of the dashboard to narrow the view to a specific tag, folder, or combination of both. The count badge next to each filter option shows how many maps match.
+  </Step>
+</Steps>
+
+<Tip>
+  Use tags to separate work and personal repositories even when they live in the same folder. For example, tag freelance client projects with `client` and personal side projects with `personal` so you can instantly filter one out during a work session.
+</Tip>
+
+## Global Search deep dive
+
+Global Search is not limited to the map you currently have open. When you type into the Global Search bar (keyboard shortcut `⌘K` / `Ctrl+K`), Flowy scans the indexed metadata of every map in your workspace.
+
+**What Global Search indexes:**
+
+- **File names** — matches partial file names, including directory segments (e.g. searching `auth` will surface `lib/auth/index.ts`, `components/AuthModal.tsx`, and `utils/authHelpers.ts`)
+- **Component names** — exported React, Vue, or Svelte component identifiers
+- **Function names** — named function exports and class method signatures extracted during the map-building pass
+
+Results are grouped by map so you can immediately see which repository the match belongs to. Clicking a result opens that map and centres the canvas on the relevant node — no manual scrolling required.
+
+<Info>
+  Global Search reflects the state of your maps at the time they were last synced. If a repository has new commits that have not yet been pulled into Flowy, recently added files may not appear in search results until you trigger a sync from the dashboard.
+</Info>
+
+## Understanding the Git Sync indicator
+
+Each map card in the dashboard displays a small coloured dot alongside the branch name and the timestamp of the last sync:
+
+| Colour | Meaning |
+|--------|---------|
+| 🟢 Green | The map matches the branch's latest commit SHA |
+| 🟡 Yellow | New commits exist on the branch since the last scan |
+| 🔴 Red | The branch has diverged or the remote could not be reached |
+
+Click the indicator to trigger a manual sync, or configure Auto-Push Webhooks in the [Integrations module](/modules/integrations) to keep maps green automatically.
+
+<CardGroup cols={2}>
+  <Card title="AI Module" icon="sparkles" href="/modules/ai">
+    Layer AI-powered explanations, anomaly detection, and refactor suggestions on top of any map you manage here.
+  </Card>
+  <Card title="Git Sync — Feature Details" icon="code-branch" href="/features/git-sync">
+    Learn how Flowy computes diff-based sync status and what happens when branches diverge.
+  </Card>
+</CardGroup>

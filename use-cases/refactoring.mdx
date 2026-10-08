@@ -1,0 +1,77 @@
+---
+title: "Plan Refactors Safely by Predicting Dependency Impact"
+sidebarTitle: "Refactoring"
+description: "Use Flowy's Focus Mode and AI Refactor Suggestions to visualize every file a change will affect before touching a single line of code."
+---
+
+The fear of refactoring is rational. In a large codebase, a module that looks self-contained might be quietly imported by twenty other files across five different layers of the application. You only discover this after the change is made — when tests start failing in parts of the codebase you never intended to touch. Flowy removes that uncertainty by making every hidden dependency visible before the refactor begins, turning a high-anxiety operation into a planned, predictable process.
+
+## The refactoring problem
+
+Most refactoring accidents share the same root cause: invisible coupling. A developer sees a module that clearly needs cleanup, makes what seems like a contained change, and then watches a cascade of unrelated failures appear in CI. The import graph was there all along — it just wasn't visible.
+
+The traditional workarounds are slow and error-prone:
+
+- Manually searching for every import of the target file across the codebase
+- Running tests and hoping the coverage is comprehensive enough to catch breakage
+- Relying on TypeScript errors to surface type mismatches, which only catches explicit type dependencies
+- Asking teammates whether they know of anything that depends on the module
+
+None of these approaches give you a complete picture before the refactor starts. Flowy does.
+
+## Using Flowy for safe refactoring
+
+<Steps>
+  <Step title="Open the mind map for the module you want to refactor">
+    Navigate to the repository's Flowy map. Locate the target module using Node Search — type the filename or component name and jump directly to it on the canvas.
+  </Step>
+  <Step title="Use Focus Mode to see all files that import this module">
+    Click the target node and activate Focus Mode. The map immediately hides every unrelated node, leaving only the files that have a direct dependency on the module you plan to refactor. The blast radius is now visible at a glance.
+  </Step>
+  <Step title="Count and review the dependent nodes">
+    Examine each dependent node in the Focus Mode view. Are the dependents all in the same layer, or do they span multiple modules? Are any of them critical path files — route handlers, top-level exports, or test utilities? This review determines the actual risk level of the refactor.
+  </Step>
+  <Step title="Enable AI Refactor Suggestions for the target node">
+    With the target node selected, open the AI panel and request Refactor Suggestions. The AI analyzes the module's responsibilities, its incoming and outgoing dependencies, and flags any Single Responsibility Principle violations — then proposes a concrete extraction and decoupling plan.
+  </Step>
+  <Step title="Review the proposed extraction and decoupling plan">
+    The AI's suggestions describe which responsibilities should be split into separate modules, what the new module boundaries should look like, and how the dependency graph will change after the refactor. Use this as the blueprint before writing any code.
+  </Step>
+  <Step title="Use Time Machine to compare current architecture to a known-good state">
+    After completing the refactor and merging, return to Flowy and use the Time Machine feature to compare the post-refactor map against the pre-refactor commit. Verify that the number of incoming dependencies on the original module has decreased and that no new circular dependencies were introduced.
+  </Step>
+</Steps>
+
+## Focus Mode for impact analysis
+
+Focus Mode is the most direct tool for refactoring safety. When you click a node and activate it, the canvas immediately collapses to show only the selected file and its immediate connections — both the files it imports and the files that import it. Everything else is hidden.
+
+This is not just a cosmetic filter. Focus Mode gives you the exact set of files that would be affected by a change to the selected module. Before writing a single line of changed code, you know:
+
+- **How many files depend on this module** — a count of five is manageable; a count of forty requires a staged approach
+- **Which layers they live in** — dependencies confined to a single folder suggest a lower-risk refactor than dependencies spread across `app/`, `lib/`, and `services/`
+- **Whether any test files are in the dependent set** — test files importing the module means the refactor will require test updates, not just implementation changes
+
+## AI Refactor Suggestions
+
+The AI Refactor Suggestions feature targets the most common structural problem in aging codebases: the Single Responsibility Principle violation. When a module has grown to handle multiple concerns, the AI detects this through two signals:
+
+1. **Diverse outgoing dependencies** — a file that imports from the database layer, the formatting utilities, the email service, and the authentication module is almost certainly doing too many things
+2. **High incoming dependency count** — a module that many unrelated files import has likely become an unintentional shared utility, accumulating functionality that was convenient to place there at the time
+
+When both signals are present, the AI proposes a concrete extraction: which subset of the module's responsibilities should become a new standalone file, what that file should be named, and which of the current dependents would be rerouted to the new module versus the original. This gives you a refactoring plan grounded in the actual structure of the codebase, not guesswork.
+
+<Tip>
+  After completing a refactor, use the **Time Machine** feature to pull up the pre-refactor commit and visually compare it to the current state. A successful refactor should show the original node with fewer incoming edges, the new extracted module with a clear and narrow responsibility, and no new cycles in the graph. If complexity increased rather than decreased, the Time Machine comparison will show it immediately.
+</Tip>
+
+## Explore further
+
+<CardGroup cols={2}>
+  <Card title="Pro Visualizer" icon="eye" href="/features/visualizer">
+    Deep-dive into Focus Mode, Layer Filters, and the Infinite Canvas — the visualization tools that make dependency analysis fast and precise.
+  </Card>
+  <Card title="Integrated AI" icon="microchip" href="/modules/ai">
+    Learn how the AI module detects anomalies, explains module responsibilities, and generates actionable refactor suggestions from the dependency graph.
+  </Card>
+</CardGroup>
