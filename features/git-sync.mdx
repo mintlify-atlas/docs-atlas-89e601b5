@@ -1,7 +1,7 @@
 ---
 title: "Real-Time Git Sync: Always Up-to-Date Architecture Maps"
 sidebarTitle: "Git Sync"
-description: "Flowy's Git Sync registers a webhook on your repository and rebuilds your mind map on every push, so your visual architecture never falls behind your code."
+description: "Flowy's Git Sync uses webhooks to rebuild your mind map on every push, so your visual architecture always reflects the branch's latest commit."
 ---
 
 Outdated documentation is often worse than no documentation at all — it creates false confidence and leads engineers to make decisions based on a picture of the codebase that no longer exists. The same problem applies to static architecture diagrams: the moment someone merges a refactor, the diagram is a lie. Flowy's Git Sync feature solves this at the infrastructure level. Rather than relying on developers to remember to regenerate their maps, Flowy registers a webhook directly on your GitHub repository and rebuilds the mind map automatically every time a new commit lands. Your visual architecture stays truthful by default.
@@ -40,13 +40,7 @@ The red state can occur if a webhook delivery was missed (for example, due to a 
 
 ## Auto-Push Webhooks
 
-For teams that want hands-off automation, Flowy's **Auto-Push Webhooks** extend Git Sync with a configurable trigger: every time a pull request is merged into your default branch, Flowy automatically regenerates the full map and pushes the updated version to all collaborators who have access.
-
-To set this up:
-
-1. Open the **Integrations** tab in your project settings.
-2. Enable **Auto-Push Webhooks** and confirm the target branch (e.g., `master` or `main`).
-3. Optionally configure a delay (in seconds) after the merge event before the rebuild fires — useful if your CI pipeline post-processes files after merge.
+For teams that want hands-off automation, Flowy's **Auto-Push Webhooks** extend Git Sync with an automatic trigger: link your project and the map will regenerate itself with each merge to master. Every time a pull request is merged into your default branch, Flowy automatically regenerates the full map and distributes the updated version to all collaborators who have access.
 
 Auto-Push Webhooks use the same underlying GitHub webhook infrastructure as standard Git Sync, but they include merge-event filtering so that pushes to feature branches don't trigger unnecessary rebuilds. For the complete webhook payload reference and security configuration (including secret validation), see [Webhooks](/reference/webhooks).
 
@@ -55,7 +49,7 @@ Auto-Push Webhooks use the same underlying GitHub webhook infrastructure as stan
 </Note>
 
 <Warning>
-  On **private repositories**, the GitHub OAuth token used to install the webhook must include the `repo` scope. Tokens granted only the `public_repo` scope will fail silently when Flowy attempts to register or receive webhook events for private repos. If your sync indicator is stuck on red for a private repository, verify that your connected account has the correct scopes in **Settings → GitHub Integration**.
+  On **private repositories**, the GitHub OAuth connection must be authorized with sufficient repository access. If your sync indicator is stuck on red for a private repository, reconnect your GitHub account via OAuth to ensure Flowy has the permissions it needs. See [GitHub Integration](/reference/github-integration) for details.
 </Warning>
 
 ## Explore more

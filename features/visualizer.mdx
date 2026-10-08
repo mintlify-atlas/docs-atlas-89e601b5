@@ -10,7 +10,7 @@ The Pro Visualizer is the interactive layer that sits on top of every mind map F
 
 <CardGroup cols={2}>
   <Card title="Infinite Canvas" icon="expand">
-    Zoom in to inspect a single module or zoom out for a bird's-eye view of the entire repository — there are no fixed boundaries. Drag nodes to arrange the layout in a way that matches your mental model of the codebase, and the canvas will remember your position between sessions.
+    Zoom, drag, and organize nodes freely in a limitless space. Zoom in to inspect a single module or zoom out for a bird's-eye view of the entire repository — there are no fixed boundaries.
   </Card>
   <Card title="Layer Filters" icon="layer-group">
     Reduce visual noise by hiding nodes you don't care about right now. Filter the map by file type (e.g., show only `.tsx` files), by folder (scope the view to a single package in a monorepo), or by Git status (highlight only files changed since the last sync). Filters can be combined and toggled instantly without regenerating the map.
@@ -19,7 +19,7 @@ The Pro Visualizer is the interactive layer that sits on top of every mind map F
     Click any node and Focus Mode activates immediately: everything on the canvas except that node and its direct connections fades away. This gives you an unobstructed view of exactly what a file imports and what imports it — critical when you need to understand the blast radius of a change before committing.
   </Card>
   <Card title="Node Search" icon="magnifying-glass">
-    In a repository with hundreds of files, scrolling the canvas to find a specific component wastes time. Type any part of a filename into the Node Search bar and Flowy instantly highlights matching nodes and pans the canvas to bring them into view. Search is fuzzy, so partial names and typos still return useful results.
+    Locate any component instantly with the search by node name. In a repository with hundreds of files, type a name into the Node Search bar and Flowy highlights the matching node and brings it into view immediately.
   </Card>
 </CardGroup>
 
@@ -35,10 +35,10 @@ Focus Mode is one of the most powerful tools in the Visualizer for understanding
     The canvas dims all unrelated nodes. What remains visible is the selected node plus every node it directly imports from and every node that directly imports it. Edges are labeled with the import path.
   </Step>
   <Step title="Trace dependencies further">
-    While in Focus Mode, you can click any of the visible connected nodes to re-center the focus on that file. This lets you trace a dependency chain step by step without exiting the focused view.
+    With the direct connections visible, you have a clear picture of exactly what a file imports and what imports it — the precise blast radius of any change to that file.
   </Step>
   <Step title="Exit Focus Mode">
-    Press `Escape` or click anywhere on the empty canvas background to deactivate Focus Mode and return to the full map. Your previous zoom level and canvas position are restored.
+    Click any other node or deselect the current node to deactivate Focus Mode and return to the full map view.
   </Step>
 </Steps>
 
@@ -50,7 +50,7 @@ Layer Filters work across three independent dimensions that can be combined in a
 
 **Folder** filters scope the visible map to one or more directories. This is especially useful in monorepos where you want to focus on a single package without the noise of sibling packages cluttering the canvas.
 
-**Git status** filters highlight nodes based on their synchronization state with the latest commit. Use this to quickly see which files are pending an update after a new push (`yellow` nodes), or which files are confirmed out of date and need a manual re-sync (`red` nodes). This filter pairs naturally with [Git Sync](/features/git-sync) to make post-merge reviews faster.
+**Git status** filters highlight nodes based on their synchronization state with the latest commit on the watched branch. Use this to quickly surface which files have changed since the last sync — pairing naturally with [Git Sync](/features/git-sync) to make post-merge reviews faster.
 
 <Tip>
   In large repositories with more than a few hundred nodes, open Node Search before panning the canvas. Searching by name and letting Flowy jump to the node is significantly faster than trying to locate it visually — especially in monorepos where multiple packages may have files with identical names.

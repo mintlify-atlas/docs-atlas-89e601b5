@@ -8,13 +8,13 @@ The Integrated AI module turns your mind map from a passive diagram into an acti
 
 <CardGroup cols={2}>
   <Card title="Explain with AI" icon="sparkles">
-    Select a node and receive a plain-language summary of the file's responsibility, the interfaces it exposes, and how it relates to its neighbours in the graph.
+    Select a node and get a clear explanation of its responsibility with AI — understanding any module in your map without reading the file directly.
   </Card>
   <Card title="Anomaly Detection" icon="shield-exclamation">
-    The AI continuously flags modules that exhibit high inverse cohesion or accumulate too many incoming dependencies — early warnings before they become crises.
+    AI flags modules with high inverse cohesion or too many incoming dependencies, surfacing structural risks before they become crises.
   </Card>
   <Card title="Refactor Suggestions" icon="arrow-right-arrow-left">
-    When a module violates the Single Responsibility Principle, the model proposes concrete extraction and decoupling strategies — with the specific imports and exports involved.
+    The model proposes how to extract and decouple modules that violate SRP, giving you a concrete path to a cleaner architecture.
   </Card>
 </CardGroup>
 
@@ -22,64 +22,29 @@ The Integrated AI module turns your mind map from a passive diagram into an acti
   AI features require an active Flowy account. During the pre-launch period, AI capabilities are included for all waitlist members who receive early access. Join the waitlist at [flowy-ebon.vercel.app](https://flowy-ebon.vercel.app) to be notified at launch.
 </Info>
 
-## How Explain with AI works
+## Explain with AI
 
-The explanation flow is designed to be instant and contextual — one click, one answer.
+The explanation flow is designed to be instant and contextual. Select any node on the mind map canvas and trigger the AI explanation to receive a plain-language summary of that module's responsibility — what it does, what it depends on, and why it matters in the context of your repository.
 
-<Steps>
-  <Step title="Select a node">
-    Click any node on the mind map canvas. The node highlights and a side panel slides in from the right, showing the file path, export list, and direct dependency count.
-  </Step>
-  <Step title="Trigger the explanation">
-    Click the **Explain with AI** button in the side panel (or press `E` with the node focused). Flowy bundles three data sources and sends them to the model: the file's raw source, its list of imports, and the names of every other node that imports it.
-  </Step>
-  <Step title="Read the plain-language summary">
-    Within a few seconds the panel updates with a structured explanation covering: what the module does, what it depends on, what depends on it, and any immediate observations the model flags as noteworthy.
-  </Step>
-  <Step title="Follow related nodes">
-    The explanation panel includes clickable references to every module mentioned. Clicking one re-centres the canvas on that node and queues its explanation automatically.
-  </Step>
-</Steps>
+This is especially useful when onboarding to an unfamiliar codebase. Starting from an entry point like `index.ts` and explaining outward through its dependencies gives you a mental model of the architecture before you dive into individual files.
 
-<Tip>
-  Use **Explain with AI** on unfamiliar entry points — such as `index.ts` or `app/layout.tsx` — when onboarding to a new codebase. The explanation surfaces the dependency chain from the top down, giving you a mental model before you dive into individual files.
-</Tip>
+## Anomaly Detection
 
-## Anomaly Detection explained
+Anomaly Detection evaluates every module in your graph for two primary signals:
 
-Anomaly Detection runs as a background analysis pass every time a map is synced. It evaluates two primary signals for every module in the graph:
+**Inverse cohesion** measures how many distinct responsibilities a single file appears to own. A cohesive module does one thing; a module with high inverse cohesion mixes unrelated concerns — data models, side-effect utilities, and UI components in the same file are a classic signal.
 
-**Inverse cohesion** measures how many distinct responsibilities a single file appears to own. A cohesive module does one thing; a module with high inverse cohesion does many unrelated things. Flowy estimates this by analysing the spread of import namespaces and the variance in the types of symbols the file exports (data models, side-effect utilities, UI components, and so on mixed together in one file are a classic signal).
+**Incoming dependency count** counts how many other modules import a given file. A file imported by many other modules is a load-bearing wall in your architecture. When it also has high inverse cohesion, it is simultaneously fragile and critical — the definition of a structural risk.
 
-**Incoming dependency count** counts how many other modules import a given file. A file imported by twenty other modules is a load-bearing wall in your architecture. If it also has high inverse cohesion, it is simultaneously fragile and critical — the definition of a structural risk.
-
-When either signal crosses a configurable threshold, the node on the canvas is decorated with an amber warning badge. Opening the node panel shows a concise breakdown of which signal triggered the flag and how far above the threshold the module sits.
-
-<Accordion title="What thresholds trigger an anomaly flag?">
-  Default thresholds are calibrated against typical TypeScript/JavaScript project patterns:
-
-  - **Incoming dependencies ≥ 15** on a non-utility module triggers a flag
-  - **Inverse cohesion score ≥ 0.7** (on a 0–1 scale) triggers a flag
-  - **Both signals elevated simultaneously** triggers a critical flag (red badge instead of amber)
-
-  These thresholds will be user-configurable in a future release — see the [roadmap](/reference/roadmap) for details.
-</Accordion>
+When either signal is elevated, the AI flags the module so you can investigate it before it becomes a bottleneck. The flag appears directly on the canvas, keeping problem areas visible as you navigate the map.
 
 ## Refactor Suggestions
 
-When the AI detects a Single Responsibility Principle (SRP) violation, it does not just report the problem — it proposes a remediation path.
+When the AI detects a Single Responsibility Principle (SRP) violation, it does not just report the problem — it proposes how to extract and decouple the affected modules.
 
-The SRP states that a module should have one, and only one, reason to change. Violations occur when a file mixes concerns: for example, a component file that also contains data-fetching logic, type definitions, and a utility function used only by a sibling file.
+The SRP states that a module should have one, and only one, reason to change. Violations occur when a file mixes concerns: for example, a component file that also contains data-fetching logic, type definitions, and utility functions used only by sibling files.
 
-**How the suggestion is generated:**
-
-1. The model groups the file's exports by inferred concern (UI rendering, data access, pure computation, type definitions, and so on).
-2. It proposes a split: which exports should move to which new files, and what those new files should be named following the project's existing naming conventions.
-3. It lists every import in the codebase that will need updating, so you know the full blast radius of the refactor before you start.
-
-<Note>
-  Refactor Suggestions are recommendations, not automated rewrites. Flowy presents the proposal in the side panel; applying it is always a deliberate, manual action on your part. This keeps the AI in an advisory role and you in control of every change that reaches your repository.
-</Note>
+The model surfaces a concrete suggestion for how to split the module — which responsibilities should be separated and how the resulting structure would reduce coupling across the graph. Reviewing the suggestion directly in the canvas gives you the full picture of the change before you begin any work in your editor.
 
 <CardGroup cols={2}>
   <Card title="Pro Integrations" icon="plug" href="/modules/integrations">

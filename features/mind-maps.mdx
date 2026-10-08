@@ -1,5 +1,5 @@
 ---
-title: "Instant Mind Maps from Any GitHub Repository"
+title: "Instant Mind Maps — Visualize Any GitHub Repository"
 sidebarTitle: "Mind Maps"
 description: "Paste a GitHub URL and Flowy generates a complete interactive mind map of the codebase — folders, files, and dependencies visualized in seconds."
 ---
@@ -20,17 +20,17 @@ For a deeper technical walkthrough of every step in this pipeline, see [How It W
 ## Feature breakdown
 
 <CardGroup cols={2}>
-  <Card title="Hierarchical Node Graph" icon="sitemap">
-    The mind map mirrors the exact directory structure of the repository. Root-level folders become primary branches; nested folders and files cascade outward as child nodes, preserving the full hierarchy you'd see in a file explorer.
+  <Card title="Infinite Canvas" icon="expand">
+    Zoom, drag, and organize nodes freely in a limitless space. Every repository — from a small utility library to a large monorepo — is rendered on the same boundless canvas so nothing is ever truncated.
   </Card>
-  <Card title="Folder & File Hierarchy" icon="folder-tree">
-    Flowy automatically distinguishes directories from individual files and renders them with distinct visual treatments. Expanding a folder node reveals its children inline, so you can drill down without losing the surrounding context.
+  <Card title="Alias Support (@/)" icon="terminal">
+    The interpreter automatically reads `tsconfig.json` to resolve framework dependencies. TypeScript projects that use `@/` or other custom path aliases are mapped correctly so aliased imports appear as real edges rather than broken links.
   </Card>
-  <Card title="Import & Dependency Mapping" icon="arrow-right-arrow-left">
-    Edges drawn between nodes represent real import or dependency relationships found in the source code. Following an edge from a component to a utility file tells you exactly which modules depend on one another.
+  <Card title="Private Repos via OAuth" icon="lock">
+    Support for enterprise codebases securely without leaving the browser. Connect your GitHub account via OAuth and Flowy maps your private repositories with the same speed as public ones.
   </Card>
-  <Card title="tsconfig Alias Resolution" icon="terminal">
-    TypeScript projects that use `@/` or other custom path aliases are analyzed correctly. Flowy reads `tsconfig.json` automatically so that aliased imports are resolved to their true targets rather than appearing as broken edges in the graph.
+  <Card title="Time Machine" icon="clock-rotate-left">
+    Select an old commit or PR and visually compare if complexity has increased. Step backwards through your repository's history to see how the architecture has evolved over time.
   </Card>
 </CardGroup>
 

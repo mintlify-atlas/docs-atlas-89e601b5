@@ -1,5 +1,5 @@
 ---
-title: "Get Started with Flowy in Under Two Minutes"
+title: "Get Started with Flowy: Generate Your First Mind Map"
 sidebarTitle: "Quickstart"
 description: "Follow these steps to join the Flowy waitlist, paste your first GitHub URL, and explore an interactive mind map of any repository's architecture."
 ---
@@ -26,13 +26,13 @@ This guide walks you through everything from joining the waitlist to exploring y
     Once you receive your early-access invitation, follow the link in your email to open the Flowy web app. No installation is required — Flowy runs entirely in the browser. Sign in with the email address you used to join the waitlist.
   </Step>
   <Step title="Paste a GitHub Repository URL">
-    On the Flowy home screen you will see a search bar with the prompt **"Paste a GitHub repository URL"**. Copy the full URL of any public GitHub repository — for example:
+    On the Flowy home screen you will find the repository search bar. Copy the full URL of any public GitHub repository — for example:
 
     ```
     https://github.com/vercel/next.js
     ```
 
-    Paste it into the search bar and press **Enter** or click **Visualize**. Flowy immediately calls the GitHub API to fetch the repository's file tree and begins analysis.
+    Paste it into the search bar and submit it. Flowy immediately calls the GitHub API to fetch the repository's file tree and begins architecture analysis.
   </Step>
   <Step title="Explore the Mind Map">
     Your interactive mind map loads within seconds. Here is what you will see on the infinite canvas:
@@ -45,13 +45,13 @@ This guide walks you through everything from joining the waitlist to exploring y
     Use your mouse wheel or trackpad to zoom, click and drag the canvas to pan, and click any individual node to select it. Activate **Focus Mode** by clicking a node — the map immediately hides everything except that file's direct connections, letting you trace dependencies without distraction.
   </Step>
   <Step title="Enable Git Sync">
-    To keep your map up to date automatically:
+    To keep your map up to date automatically, connect Git Sync from the repository's settings in your Flowy dashboard:
 
-    1. Click the **Git Sync** button in the top-right toolbar.
-    2. Flowy will prompt you to authorize the GitHub integration via OAuth if you have not done so already.
+    1. Open the map's settings in the Flowy dashboard.
+    2. Authorize the GitHub integration via OAuth if you have not done so already.
     3. Once connected, Flowy registers a webhook on the repository. From this point on, every push to the tracked branch triggers an automatic map refresh.
 
-    The dashboard shows a traffic-light indicator for each of your saved maps — green means in sync with the latest commit, amber means a refresh is in progress, and red means the map is behind the branch.
+    The dashboard displays a traffic-light indicator for each saved map — green means in sync with the latest commit, amber means a refresh is in progress, and red means the map is behind the branch.
   </Step>
 </Steps>
 

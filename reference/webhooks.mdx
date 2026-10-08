@@ -1,5 +1,5 @@
 ---
-title: "Webhooks: Automate Mind Map Regeneration on Push"
+title: "Webhooks: Automate Mind Map Regeneration on Git Push"
 sidebarTitle: "Webhooks"
 description: "Configure Flowy's Auto-Push Webhooks to automatically regenerate your mind map on every commit or merge, keeping your architecture view always current."
 ---
@@ -10,8 +10,8 @@ Flowy webhooks create a live connection between your GitHub repository and your 
 
 Understanding the flow behind webhooks helps you configure them correctly and troubleshoot if something doesn't update as expected.
 
-1. **Flowy registers a webhook on your GitHub repository** via the GitHub API using the `admin:repo_hook` OAuth scope. The webhook targets Flowy's secure ingest endpoint.
-2. **GitHub sends a `push` event payload** to Flowy's endpoint on every qualifying commit. The payload includes the branch ref, a list of commits, and metadata about added, modified, and removed files.
+1. **Flowy registers a webhook on your GitHub repository** via the GitHub API using the `admin:repo_hook` OAuth scope. GitHub will deliver push event payloads to Flowy on your behalf whenever qualifying commits land.
+2. **GitHub sends a `push` event payload** to Flowy on every qualifying commit. The payload includes the branch ref, a list of commits, and metadata about added, modified, and removed files.
 3. **Flowy re-fetches the file tree** for the affected branch and re-runs the architecture analysis to produce an updated dependency graph.
 4. **The mind map re-renders** with any new, removed, or restructured nodes. The **Git Sync** indicator in the map header transitions from amber (out of date) to green (synced), reflecting the latest commit.
 

@@ -1,7 +1,7 @@
 ---
 title: "Living Documentation That Syncs with Your Codebase"
 sidebarTitle: "Living Docs"
-description: "Replace static architecture diagrams with Flowy's auto-synced mind maps — documentation that reflects the actual codebase on every commit, with no manual upkeep."
+description: "Replace static architecture diagrams with Flowy mind maps that auto-sync on every commit, keeping your documentation accurate with zero manual upkeep."
 ---
 
 Every architecture diagram starts accurate and becomes a lie. A developer draws a system diagram during a sprint planning session, it gets committed to the wiki, and within three weeks it no longer reflects how the modules actually connect. The diagram says `UserService` is independent; the codebase says it imports from `PaymentService` and `NotificationService`. Nobody updates the diagram because nobody has time, and gradually the written documentation and the living codebase diverge so completely that the documentation becomes worse than useless — it actively misleads. Flowy's mind maps are generated directly from the repository and synchronized on every commit, so this divergence is structurally impossible.
@@ -36,7 +36,7 @@ Flowy's mind maps are not a separate artifact — they are a direct rendering of
     Sign into Flowy and connect your GitHub account using OAuth. This grants Flowy read access to your repositories — including private ones — without requiring manual token management. Select the repository you want to use as living documentation.
   </Step>
   <Step title="Enable Git Sync and Auto-Push Webhooks">
-    In the repository settings within Flowy, enable Git Sync to track the branch's commit status, then configure Auto-Push Webhooks. Flowy will provide a webhook URL to add to your repository's GitHub settings. After this is configured, every merge to `main` triggers an automatic map regeneration.
+    With the repository connected, enable Git Sync so Flowy tracks the branch's latest commit status with a traffic light indicator. Then activate Auto-Push Webhooks — once linked, the map regenerates automatically on every merge to `main`, with no manual action required.
   </Step>
   <Step title="Add Sticky Notes to key modules explaining their purpose">
     Navigate the map and add Sticky Notes to the modules that most commonly confuse new contributors or have non-obvious responsibilities. A single sentence — "Entry point for all background job scheduling" or "Do not import this directly from UI components" — can prevent hours of confusion and misuse.

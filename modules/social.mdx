@@ -4,69 +4,41 @@ sidebarTitle: "Social"
 description: "Share live architecture maps via public URLs, leave sticky notes on any node to preserve context, and keep shared maps fresh with auto-push webhooks."
 ---
 
-Software architecture is a team conversation, not a solo document. Flowy's Social Features are built around that idea — giving you the tools to share a live, explorable view of your repository with any teammate, annotate specific nodes with the context that would otherwise live only in someone's head, and ensure that every shared link always reflects the latest state of the codebase. Whether you are onboarding a new hire, running a remote code review, or documenting a known area of technical debt, these features turn a private map into a shared resource.
+Software architecture is a team conversation, not a solo document. Flowy's Social Features are built around that idea — giving you the tools to share a live, explorable view of your repository with any teammate, annotate specific nodes with context that would otherwise live only in someone's head, and ensure that every shared link always reflects the latest state of the codebase. Whether you are onboarding a new hire, running a remote code review, or documenting a known area of technical debt, these features turn a private map into a shared resource.
 
 <CardGroup cols={2}>
   <Card title="Shareable Maps (URLs)" icon="link">
-    Generate a public link that lets anyone explore the full architecture of your repository in Flowy's interactive canvas — no account required to view.
+    A public link for anyone to explore the architecture remotely — no Flowy account required to view an interactive map.
   </Card>
   <Card title="In-App Sticky Notes" icon="note-sticky">
-    Pin virtual notes directly onto any node to explain technical debt, leave onboarding hints, or add code-review comments that stay attached to the relevant file.
+    Leave virtual notes on nodes to explain technical debt to the team — keeping institutional knowledge attached to the exact module it describes.
   </Card>
   <Card title="Auto-Push Webhooks" icon="webhook">
-    Connect a webhook so that the shared map regenerates automatically with every merge — keeping public links current without any manual re-sharing. Configured in the [Integrations module](/modules/integrations).
+    Link your project and the map will regenerate itself with each merge to master, keeping shared public links current without any manual re-sharing. Configured in the [Integrations module](/modules/integrations).
   </Card>
 </CardGroup>
 
 ## Sharing a map
 
-Any map in your workspace can be published as a read-only public link in a few steps.
+Any map in your workspace can be published as a read-only public link. Once enabled, anyone with the URL can explore the full interactive canvas — panning, zooming, and reading node metadata — without needing a Flowy account.
 
-<Steps>
-  <Step title="Open the map">
-    Navigate to your dashboard and click the map you want to share. The interactive canvas opens on the full-screen editor view.
-  </Step>
-  <Step title="Click Share">
-    In the top-right toolbar, click the **Share** button (the icon with an arrow pointing upward from a box). A sharing panel slides in from the right.
-  </Step>
-  <Step title="Enable public access and copy the link">
-    Toggle **Public link** to the on position. Flowy generates a unique URL tied to the current map. Click **Copy link** to copy it to your clipboard. The URL is immediately live — anyone who receives it can start exploring.
-  </Step>
-  <Step title="Send to your teammate">
-    Paste the URL into Slack, a pull request description, a Notion page, or anywhere your team communicates. The recipient can pan, zoom, use Focus Mode, and read node metadata without needing a Flowy account.
-  </Step>
-</Steps>
+This makes it straightforward to include a live architecture map in a pull request description, a Notion page, a Slack message, or any other channel your team uses. The recipient sees the same interactive view you do, just without editing access.
 
 <Note>
-  Shareable map URLs expose the full file structure and import graph of the repository to anyone who holds the link. For proprietary or commercially sensitive codebases, treat the link as you would any internal document — share it over secure channels and consider revoking it (via the Share panel) once the review session is over.
+  Shareable map URLs expose the full file structure and import graph of the repository to anyone who holds the link. For proprietary or commercially sensitive codebases, treat the link as you would any internal document and share it over secure channels.
 </Note>
 
 ## Sticky Notes
 
-Sticky Notes let you annotate the living map with the institutional knowledge that never makes it into source code comments or commit messages.
+Sticky Notes let you annotate the living map with institutional knowledge that never makes it into source code comments or commit messages. Pin a virtual note directly onto any node — marking technical debt, leaving onboarding hints for new developers, or flagging a module for discussion in an upcoming code review.
 
-**Adding a note to a node:**
-
-1. Right-click any node on the canvas and select **Add Sticky Note** from the context menu.
-2. A small note editor appears anchored to the node. Type your note — there is no character limit, but concise notes are easier to scan at a glance.
-3. Click outside the editor or press `Escape` to save and collapse the note. A small coloured badge appears on the node to indicate a note is attached.
-4. Hover over the badge (or click it) to expand and read the full note.
-
-**What teams use Sticky Notes for:**
-
-- **Technical debt** — `"This service was a quick fix in Q3 2024, scheduled for extraction in the next sprint."` Keeps the debt visible without requiring a separate issue tracker lookup.
-- **Onboarding context** — `"New devs: start here. This module bootstraps the entire data layer."` Notes stay attached to the node, so they appear naturally when someone explores the map for the first time.
-- **Code review comments** — Flag a specific module during a review with a note such as `"Why does this import AuthService? Feels like a layer violation — discuss in PR #482."` The note persists until explicitly deleted, creating a lightweight audit trail.
-
-<Tip>
-  During a live code review session, open the shared map URL in a team call and have the reviewer add sticky notes in real time as they navigate. The notes are visible to anyone viewing the map immediately, turning the architecture diagram into a synchronous annotation board without needing a separate whiteboard tool.
-</Tip>
+Notes stay attached to their node, so they surface naturally whenever anyone navigates to that part of the map. This keeps important context visible without requiring a separate issue tracker lookup or a separate documentation page.
 
 ## Keeping shared maps current
 
 A shared map URL points to a living snapshot — it reflects the map as it was at the time of the last sync. If your team merges frequently, you will want shared maps to update automatically rather than going stale.
 
-Configure Auto-Push Webhooks in the [Pro Integrations module](/modules/integrations) to trigger a map regeneration on every merge to your target branch. Once a webhook is active, any teammate viewing the shared URL will always see a map that matches the latest commit — no re-sharing required, and no risk of someone making architectural decisions based on an outdated graph.
+Configure Auto-Push Webhooks in the [Pro Integrations module](/modules/integrations) to trigger a map regeneration with each merge to master. Once a webhook is active, any teammate viewing the shared URL will always see a map that matches the latest commit — no re-sharing required, and no risk of someone making architectural decisions based on an outdated graph.
 
 <CardGroup cols={2}>
   <Card title="Code Reviews Use Case" icon="code-pull-request" href="/use-cases/code-reviews">
